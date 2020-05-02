@@ -5,17 +5,23 @@ This app are meant to be used by authorized personel which is the people of BNN 
 ## Prerequisite
 
 In this repo you will find the App build using expo, so anyone who wants to contribute to this project, first you need to install your local machine with expo cli.
+
 ```npm install -g expo-cli```
 
 After you have done install the expo CLI, clone or download this project, open the project by type.
+
 ```cd /{path}/django-react-elearning-mobile/SchoolApp```
 
 Then you can start the app
+
 ```npm install``` 
+
 or 
+
 ```yarn add``` 
 
 then 
+
 ```npm start```
 
 ## Database
