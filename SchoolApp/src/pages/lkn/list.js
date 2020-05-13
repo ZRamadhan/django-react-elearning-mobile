@@ -6,18 +6,16 @@ function Separator() {
   return <View style={styles.separator} />;
 }
 
-export default function Login(props) {
+export default function LknEdit() {
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <Text style={styles.title}>
-          Ini Halaman Login
+          Ini LKN EDIT
         </Text>
         <Button
           title="Press me"
-          onPress={() =>  props.navigation.navigate('lkn.list', {
-            'data': 'halo'
-          })}
+          onPress={() => Alert.alert('Simple Button pressed')}
         />
       </View>
       <Separator />
@@ -30,9 +28,7 @@ export default function Login(props) {
         <Button
           title="Press me"
           color="#f194ff"
-          onPress={ () => props.navigation.navigate('tersangka.list', 1, {
-            'test': 'data'
-          })}
+          onPress={() => Alert.alert('Button with adjusted color pressed')}
         />
       </View>
       <Separator />
