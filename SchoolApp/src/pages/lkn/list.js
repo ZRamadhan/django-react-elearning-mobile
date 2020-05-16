@@ -1,65 +1,66 @@
 import React from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
+import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
+import NavigationBar from '../../component/navigationBar';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
 
-export default function LknEdit() {
-  return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <Text style={styles.title}>
-          Ini LKN EDIT
-        </Text>
+export default class LKNLIST extends React.Component {
+  state = {
+    loading: false,
+  }
+
+  componentDidMount(){
+    this.setState({loading:true})
+    //do api call here
+    setTimeout(() => this.setState({loading:false}), 2000);
+  }
+
+  render(){
+    //refer navigation path in component navigator , buttonGroup is button that will be render in bottom animation menu
+    const buttonGroup = (
+      <React.Fragment>
         <Button
-          title="Press me"
-          onPress={() => Alert.alert('Simple Button pressed')}
+          title="BUAT LKN"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={()=>this.props.navigation.navigate('lkn.new')}
         />
-      </View>
-      <Separator />
-      <View>
-        <Text style={styles.title}>
-          Adjust the color in a way that looks standard on each platform. On
-          iOS, the color prop controls the color of the text. On Android, the
-          color adjusts the background color of the button.
-        </Text>
         <Button
-          title="Press me"
-          color="#f194ff"
-          onPress={() => Alert.alert('Button with adjusted color pressed')}
+          title="LIST PENANGKAPAN"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={()=>this.props.navigation.navigate('penangkapan.list')}
         />
-      </View>
-      <Separator />
-      <View>
-        <Text style={styles.title}>
-          All interaction for the component are disabled.
-        </Text>
         <Button
-          title="Press me"
-          disabled
-          onPress={() => Alert.alert('Cannot press this one')}
+          title="LIST TERSANGKA"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={()=>this.props.navigation.navigate('tersangka.list')}
         />
-      </View>
-      <Separator />
-      <View>
-        <Text style={styles.title}>
-          This layout strategy lets the title define the width of the button.
-        </Text>
-        <View style={styles.fixToText}>
-          <Button
-            title="Left button"
-            onPress={() => Alert.alert('Left button pressed')}
-          />
-          <Button
-            title="Right button"
-            onPress={() => Alert.alert('Right button pressed')}
-          />
-        </View>
-      </View>
-    </SafeAreaView>
-  );
+        <Button
+          title="LIST BARANG BUKTI"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={()=>this.props.navigation.navigate('barangbukti.list')}
+        />
+      </React.Fragment>
+    )
+
+    return (
+      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+        <SafeAreaView style={styles.container}>
+          <Text style={styles.title}>
+            Ini LKN List
+          </Text>
+          <Separator />
+        </SafeAreaView>
+      </NavigationBar>
+    )
+  }
 }
 
 const styles = StyleSheet.create({

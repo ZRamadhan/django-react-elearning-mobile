@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 
 import Constants from 'expo-constants';
 import NavigationBar from '../component/navigationBar';
+import FormGroup from '../component/form/formGroup';
 
 function Separator() {
   return <View style={styles.separator} />;
@@ -19,11 +20,15 @@ export default class Login extends React.Component {
       />
     )
     return (
-      <NavigationBar renderButton={buttonGroup}>
+      <NavigationBar renderButton={buttonGroup} loading={false} hideFilter hideNavbar>
         <SafeAreaView style={styles.container}>
-          <Text style={styles.title}>
-            Ini Halaman Login
-          </Text>
+          <FormGroup/>
+          <Button
+            title="Go to Dashboard"
+            type="outline"
+            containerStyle={{padding:10}}
+            onPress={() => this.props.navigation.navigate('lkn.list')}
+          />
         <Separator />
       </SafeAreaView>
       </NavigationBar>

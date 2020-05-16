@@ -8,7 +8,7 @@ function Separator() {
   return <View style={styles.separator} />;
 }
 
-export default class TersangkaEdit extends React.Component {
+export default class PenangkapanDetail extends React.Component {
   state = {
     loading: false,
   }
@@ -32,7 +32,7 @@ export default class TersangkaEdit extends React.Component {
       <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
         <Text style={styles.title}>
-          Ini Tersangka Edit
+          Ini Penangkapan Detail
         </Text>
         <Separator />
       </SafeAreaView>
