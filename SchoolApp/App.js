@@ -2,17 +2,21 @@
 import React, { Component } from 'react';
 import Navigator from './src/component/navigator';
 import { MenuProvider } from 'react-native-popup-menu';
+import { Provider } from 'react-redux';
+import { store } from './src/reducers';
 
 export default class App extends Component {
   render() {
     return (
-      <MenuProvider>
-        <Navigator
-          ref={(nav) => {
-            this.navigator = nav;
-          }}
-        />
-      </MenuProvider>
+      <Provider store={store}>
+        <MenuProvider>
+          <Navigator
+            ref={(nav) => {
+              this.navigator = nav;
+            }}
+          />
+        </MenuProvider>
+      </Provider>
     )
   }
 }

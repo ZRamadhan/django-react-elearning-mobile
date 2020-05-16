@@ -19,6 +19,10 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "extra": {
+      "PUSHER_KEY": "c34071d7282883580e7f",
+      "API_ENDPOINT": "http://178.128.80.233:8000"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],

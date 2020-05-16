@@ -1,16 +1,21 @@
 import React from 'react';
-import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-elements';
-
+import { connect } from 'react-redux';
 import Constants from 'expo-constants';
 import NavigationBar from '../component/navigationBar';
 import FormGroup from '../component/form/formGroup';
+import { login } from '../reduxActions/dashboard';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
 
-export default class Login extends React.Component {
+class Login extends React.Component {
+  onSubmit = async() => {
+    await this.props.dispatch(login())
+  }
+
   render(){
     const buttonGroup = (
       <Button
@@ -27,7 +32,10 @@ export default class Login extends React.Component {
             title="Go to Dashboard"
             type="outline"
             containerStyle={{padding:10}}
-            onPress={() => this.props.navigation.navigate('lkn.list')}
+            onPress={() => {
+              this.onSubmit();
+              this.props.navigation.navigate('lkn.list')
+            }}
           />
         <Separator />
       </SafeAreaView>
@@ -57,3 +65,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
+
+export default connect()(Login)
+

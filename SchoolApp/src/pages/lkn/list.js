@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { Button } from 'react-native-elements'
+import { get_token } from '../../helper/requestHelper';
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
 
@@ -13,9 +14,10 @@ export default class LKNLIST extends React.Component {
     loading: false,
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     this.setState({loading:true})
     //do api call here
+    const token = await get_token()
     setTimeout(() => this.setState({loading:false}), 2000);
   }
 
