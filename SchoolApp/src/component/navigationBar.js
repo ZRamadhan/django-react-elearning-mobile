@@ -13,6 +13,10 @@ const {
   Animated,
 } = ReactNative;
 
+const data = []
+for(let i=0; i<26; i++){
+  data.push('90%')
+}
 
 var isHidden = false;
 
@@ -150,7 +154,8 @@ class NavigationBar extends Component {
             active
             loading={this.props.loading}
             containerStyles={{marginLeft: 20}}
-            pRows={25} pHeight={[50, 30, 20]}
+            pRows={25}
+            pWidth={data}
            >
             <TouchableWithoutFeedback onPress={()=> {
                 this._toggleSubview('false')

@@ -10,7 +10,7 @@ import TextArea from '../textArea';
 export default class FormGroup extends Component {
    render(){
      return (
-         <Container style={styles.container}>
+         <Container>
              <Content>
                  <List>
                     <Picker />
