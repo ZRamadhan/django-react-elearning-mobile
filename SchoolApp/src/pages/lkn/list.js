@@ -51,7 +51,7 @@ export default class LKNLIST extends React.Component {
     )
 
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar renderButton={buttonGroup} loading={this.state.loading} home>
         <SafeAreaView style={styles.container}>
           <Text style={styles.title}>
             Ini LKN List

@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Content, List, ListItem, InputGroup, Input, Icon } from 'native-base';
+import { Container, Content, List } from 'native-base';
 import { StyleSheet } from 'react-native';
+import DatePicker from '../datePicker.android';
+import Input from '../input';
+import TimePicker from '../timePicker';
+import Picker from '../picker';
+import TextArea from '../textArea';
 
 export default class FormGroup extends Component {
    render(){
@@ -8,12 +13,12 @@ export default class FormGroup extends Component {
          <Container style={styles.container}>
              <Content>
                  <List>
-                     <ListItem>
-                         <InputGroup>
-                            <Icon name='ios-person' />
-                            <Input placeholder='Email' />
-                         </InputGroup>
-                     </ListItem>
+                    <Picker />
+                    <DatePicker placeholder='Set Date'/>
+                    <TimePicker placeholder='Set Time'/>
+                    <Input placeholder='Fill Value'/>
+                    <Input placeholder='Fill Number Value' type='number'/>
+                    <TextArea />
                  </List>
              </Content>
          </Container>

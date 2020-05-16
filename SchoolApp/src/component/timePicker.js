@@ -7,7 +7,7 @@ import { StyleSheet } from 'react-native';
 
 const DatePicker = (props) => {
   const [date, setDate] = useState(null);
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState('time');
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
@@ -21,8 +21,8 @@ const DatePicker = (props) => {
     setMode(currentMode);
   };
 
-  const showDatepicker = () => {
-    showMode('date');
+  const showTimePicker = () => {
+    showMode('time');
   };
 
 
@@ -38,9 +38,9 @@ const DatePicker = (props) => {
             onChange={onChange}
           />
         )}
-        <Icon name='calendar' />
-        <TouchableOpacity onPress={showDatepicker}>
-          <Text style={{paddingLeft:5, fontSize:14, color:'gray'}}>{date ? moment(date).format("DD/MM/YYYY") : props.placeholder}</Text>
+        <Icon name='clock' />
+        <TouchableOpacity onPress={showTimePicker}>
+          <Text style={{paddingLeft:5, fontSize:16, color:'gray', fontSize: 14}}>{date ? moment(date).format("HH:mm:ss") : props.placeholder}</Text>
         </TouchableOpacity>
       </InputGroup>
     </View>

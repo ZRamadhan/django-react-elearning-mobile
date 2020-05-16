@@ -1,39 +1,38 @@
 import React, {Component} from 'react';
-import ReactNative, { ScrollView } from 'react-native';
+import ReactNative, { ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Icon } from 'react-native-elements'
 import DatePicker from '../component/datePicker.android';
 import ContentLoader from 'react-native-easy-content-loader';
+import { withNavigation } from 'react-navigation';
 import SearchBar from '../component/searchBar';
 
 const {
   StyleSheet,
   View,
-  Animated
+  Animated,
 } = ReactNative;
 
 
-var isHidden = true;
+var isHidden = false;
 
-export default class AppContainer extends Component {
+class NavigationBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bounceValue: new Animated.Value(1000),  //This is the initial position of the subview
-      buttonText: "Show Subview",
       showFilter: false,
     };
   }
 
-  _toggleSubview() {    
-    this.setState({
-      buttonText: !isHidden ? "Show Subview" : "Hide Subview"
-    });
+  _toggleSubview(value) {
+    isHidden = value==='false' ? false : !isHidden;
 
-    var toValue = 2000;
-
+    let toValue;
     if(isHidden) {
       toValue = 0;
+    } else {
+      toValue = 2000;
     }
 
     //This will animate the transalteY of the subview between 0 & 100 depending on its current state
@@ -47,8 +46,6 @@ export default class AppContainer extends Component {
         friction: 6,
       }
     ).start();
-
-    isHidden = !isHidden;
   }
 
   render() {
@@ -79,9 +76,12 @@ export default class AppContainer extends Component {
                   type="outline"
                 />
                 <Button
-                  title="Logout"
+                  title={this.props.home ? "Logout" : "Back"}
                   buttonStyle={styles.buttonDisabled}
                   type="clear"
+                  onPress={this.props.home 
+                    ? () => this.props.navigation.navigate('login') 
+                    : () => this.props.navigation.pop()}
                 />
                 <Button
                   title="Notification"
@@ -101,8 +101,8 @@ export default class AppContainer extends Component {
           {this.state.showFilter && (
             <View>
               <SearchBar />
-              <DatePicker placeholder='starting date'/>
-              <DatePicker placeholder='end date'/>
+              <DatePicker placeholder='Starting Date'/>
+              <DatePicker placeholder='End Date'/>
               <Button
                   title="Apply Filter"
                   icon={
@@ -149,9 +149,15 @@ export default class AppContainer extends Component {
           <ContentLoader
             active
             loading={this.props.loading}
-            avatar pRows={25} pHeight={[50, 30, 20]}
+            containerStyles={{marginLeft: 20}}
+            pRows={25} pHeight={[50, 30, 20]}
            >
-            {this.props.children}
+            <TouchableWithoutFeedback onPress={()=> {
+                this._toggleSubview('false')
+              }}
+            >
+              {this.props.children}
+            </TouchableWithoutFeedback>
            </ContentLoader>
       </View>
     );
@@ -189,3 +195,4 @@ var styles = StyleSheet.create({
   }
 });
 
+export default withNavigation(NavigationBar)
