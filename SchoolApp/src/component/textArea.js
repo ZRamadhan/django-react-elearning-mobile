@@ -6,8 +6,8 @@ export default class TextArea extends Component {
     render() {
         return (
           <View style={styles.container}>
-            <Text style={{fontSize: 14, fontWeight:'200', color:'grey'}}>Text Area</Text>
-            <Textarea style={{ paddingLeft:20, paddingTop: 15, paddingBottom: 15, fontSize: 14, color: 'grey' }} rowSpan={5} bordered placeholder='Text Area' />
+            <Text style={{fontSize: 14, fontWeight:'200', color:'grey'}}>{this.props.placeholder}</Text>
+            <Textarea style={{ paddingLeft:20, paddingTop: 15, paddingBottom: 15, fontSize: 14, color: 'grey' }} rowSpan={5} bordered placeholder={this.props.placeholder} />
           </View>
         )
     }

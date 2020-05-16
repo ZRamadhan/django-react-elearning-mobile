@@ -17,9 +17,9 @@ export default class PickerInputExample extends Component {
   render() {
     return (
      <View style={styles.container}>
-       <Text style={{fontWeight:'200', color:'grey'}}>Select Your SIM</Text>
+       <Text style={{fontWeight:'200', color:'grey'}}>{this.props.placeholder}</Text>
         <InputGroup>
-            <Icon name='funnel' />
+            <Icon name={this.props.iconName} />
             <Item picker style={{paddingRight:10}}>
                 <Picker
                     mode="dropdown"
@@ -32,11 +32,10 @@ export default class PickerInputExample extends Component {
                     selectedValue={this.state.selected2}
                     onValueChange={this.onValueChange2.bind(this)}
                     >
-                    <Picker.Item label="Select Your SIM" value="key0" />
-                    <Picker.Item label="ATM Card" value="key1" />
-                    <Picker.Item label="Debit Card" value="key2" />
-                    <Picker.Item label="Credit Card" value="key3" />
-                    <Picker.Item label="Net Banking" value="key4" />
+                      <Picker.Item label={this.props.placeholder} value={this.props.placeholder} />
+                      {this.props.dropdown.map(data =>
+                        <Picker.Item key={data.value} label={data.name} value={data.value} />    
+                      )}
                 </Picker>
             </Item>
         </InputGroup>
