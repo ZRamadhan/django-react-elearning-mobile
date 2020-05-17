@@ -40,7 +40,7 @@ const DatePicker = (props) => {
         )}
         <Icon name='clock' />
         <TouchableOpacity onPress={showTimePicker}>
-          <Text style={{paddingLeft:5, fontSize:16, color:'gray', fontSize: 14}}>{date ? moment(date).format("HH:mm:ss") : props.placeholder}</Text>
+          <Text style={{paddingLeft:5, fontSize:16, color:'gray', fontSize: 14}}>{date ? moment(date).format("HH:mm:ss") : "Atur Waktu"}</Text>
         </TouchableOpacity>
       </InputGroup>
     </View>

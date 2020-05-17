@@ -3,10 +3,17 @@ import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
+import FormGroup from '../../component/form/formGroup';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
+
+const formData = [
+  {label: 'SP KAP', name: 'No Penangkapan', fieldName: 'no_penangkapan'},
+  {label: 'TANGGAL PENANGKAPAN', name: 'Tanggal Penangkapan', fieldName: 'tanggal_penangkapan', type: 'date'},
+  {label: 'MASA BERAKHIR PENANGKAPAN', name: 'Masa Berakhir Penangkapan', fieldName: 'masa_berakhir_penangkapan', type: 'date'},
+]
 
 export default class PenangkapanNew extends React.Component {
   state = {
@@ -31,9 +38,15 @@ export default class PenangkapanNew extends React.Component {
     return (
       <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>
-          Ini Penangkapan New
-        </Text>
+        <FormGroup title="BUAT PENANGKAPAN" formData={formData}></FormGroup>
+        <Button
+          title="Buat Penangkapan"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={() => {
+            this.props.navigation.pop()
+          }}
+        />
         <Separator />
       </SafeAreaView>
       </NavigationBar>

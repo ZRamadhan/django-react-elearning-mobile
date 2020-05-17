@@ -22,11 +22,20 @@ export default class TersangkaList extends React.Component {
   render(){
     //refer navigation path in component navigator , buttonGroup is button that will be render in bottom animation menu
     const buttonGroup = (
-      <Button
-        title="Solid Button"
-        type="outline"
-        containerStyle={{padding:10}}
-      />
+      <React.Fragment>
+         <Button
+          title="BUAT TERSANGKA"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={()=>this.props.navigation.navigate('tersangka.new')}
+        />
+        <Button
+          title="EDIT TERSANGKA"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={()=>this.props.navigation.navigate('tersangka.edit')}
+        />
+      </React.Fragment>
     )
     return (
       <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>

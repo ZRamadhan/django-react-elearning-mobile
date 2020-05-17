@@ -4,15 +4,18 @@ import { StyleSheet, View, Text } from 'react-native';
 
 export default class Inputs extends Component {
     render() {
+        let input = <Input style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder}/>
+        if(this.props.type === 'number'){
+          input = <Input style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder} keyboardType = 'numeric'/>
+        } else if(this.props.type === 'password'){
+          input = <Input style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder} secureTextEntry/>
+        }
         return (
           <View style={styles.container}>
             <Text style={{fontWeight:'200', color:'grey'}}>{this.props.placeholder}</Text>
             <InputGroup>
                 <Icon name={this.props.iconName} />
-                {this.props.type==='number' ? 
-                  <Input style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder} keyboardType = 'numeric'/>
-                  : <Input style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder}/>
-                }
+                {input}
             </InputGroup>
           </View>
         )

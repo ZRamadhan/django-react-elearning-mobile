@@ -3,10 +3,19 @@ import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
+import FormGroup from '../../component/form/formGroup';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
+
+const dropdown = [{value:'laki-laki', name:'laki-laki'}, {value:'perempuan', name:'perempuan'}];
+const formData = [
+  {label: 'Nama Tersangka', name: 'Nama Tersangka', fieldName: 'nama_tersangka'},
+  {label: 'Umur', name: 'Umur', fieldName: 'umur', type: 'number'},
+  {label: 'Jenis Kelamin', name: 'Jenis Kelamin', fieldName: 'jenis_kelamin', dropdown: dropdown, type: 'select'},
+  {label: 'Foto', name: 'foto', fieldName: 'foto', type: 'upload'}
+]
 
 export default class TersangkaEdit extends React.Component {
   state = {
@@ -31,9 +40,15 @@ export default class TersangkaEdit extends React.Component {
     return (
       <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>
-          Ini Tersangka Edit
-        </Text>
+        <FormGroup title="Edit Tersangka" formData={formData}/>
+        <Button
+          title="Edit Tersangka"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={() => {
+            this.props.navigation.navigate('tersangka.list')
+          }}
+        />
         <Separator />
       </SafeAreaView>
       </NavigationBar>

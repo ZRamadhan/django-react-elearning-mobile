@@ -7,42 +7,37 @@ import TimePicker from '../timePicker';
 import Picker from '../picker';
 import TextArea from '../textArea';
 
-const dropdown = [{value:'laki-laki', name:'laki-laki'}, {value:'perempuan', name:'perempuan'}];
-const formData = [
-  {label: 'Nama Tersangka', name: 'Nama Tersangka', fieldName: 'nama_tersangka'},
-  {label: 'Umur', name: 'Umur', fieldName: 'umur'},
-  {label: 'Jenis Kelamin', name: 'Jenis Kelamin', fieldName: 'jenis_kelamin', dropdown: dropdown, type: 'select'},
-  {label: 'Nama Tersangka', name: 'Nama Tersangka', fieldName: 'nama_tersangka', type: 'number'},
-  {label: 'Umur', name: 'Umur', fieldName: 'umur', type: 'time'},
-  {label: 'Jenis Kelamin', name: 'Jenis Kelamin', fieldName: 'jenis_kelamin', type: 'area'},
-]
-
 export default class FormGroup extends Component {
    render(){
-    const FormList = formData.map((data) => {
+    const FormList = (this.props.formData || []).map((data) => {
       if(data.type === 'input' || data.type === null || data.type === undefined){
         return (
-          <Input placeholder={data.label}/>
+          <Input key={data.label} placeholder={data.label}/>
         )
-      } else if(data.type === 'date'){
+      } else if(data.type === 'password'){
         return (
-          <DatePicker placeholder={data.label}/>
+          <Input key={data.label} placeholder={data.label} type='password'/>
+        )
+      }
+      else if(data.type === 'date'){
+        return (
+          <DatePicker key={data.label} placeholder={data.label}/>
         ) 
       } else if(data.type === 'select'){
         return (
-          <Picker placeholder={data.label} dropdown={data.dropdown}/>
+          <Picker key={data.label} placeholder={data.label} dropdown={data.dropdown}/>
         )
       } else if(data.type === 'number'){
         return (
-          <Input placeholder={data.label} type='number'/>
+          <Input key={data.label} placeholder={data.label} type='number'/>
         )
       } else if(data.type === 'time'){
         return (
-          <TimePicker placeholder={data.label}/>
+          <TimePicker key={data.label} placeholder={data.label}/>
         )
       } else if(data.type === 'area'){
         return (
-          <TextArea placeholder={data.label}/>
+          <TextArea key={data.label} placeholder={data.label}/>
         )
       } 
       return <Text />
@@ -50,9 +45,20 @@ export default class FormGroup extends Component {
   );
 
      return (
-         <Container style={{backgroundColor:'rgba(255, 255, 255, 0.3)'}}>
+         <Container style={{backgroundColor:'rgba(255, 255, 255, 0.5)'}}>
              <Content>
-                 <Text style={{fontSize:20, fontWeight:'bold', color:'grey', marginBottom:10}}>FORM PENANGKAPAN</Text>
+                 <Text style={{
+                   fontSize:20, 
+                   fontWeight:'bold', 
+                   color:'grey', 
+                   margin: 10, 
+                   textDecorationLine: "underline",
+                   textDecorationStyle: "solid",
+                   textDecorationColor: "#000"
+                   }}
+                 >
+                  {this.props.title}
+                </Text>
                  <List>
                     {FormList}
                  </List>

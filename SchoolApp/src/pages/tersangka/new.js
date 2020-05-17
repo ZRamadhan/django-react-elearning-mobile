@@ -3,12 +3,21 @@ import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
+import FormGroup from '../../component/form/formGroup';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
 
-export default class BarangBuktiList extends React.Component {
+const dropdown = [{value:'laki-laki', name:'laki-laki'}, {value:'perempuan', name:'perempuan'}];
+const formData = [
+  {label: 'Nama Tersangka', name: 'Nama Tersangka', fieldName: 'nama_tersangka'},
+  {label: 'Umur', name: 'Umur', fieldName: 'umur', type: 'number'},
+  {label: 'Jenis Kelamin', name: 'Jenis Kelamin', fieldName: 'jenis_kelamin', dropdown: dropdown, type: 'select'},
+  {label: 'Foto', name: 'foto', fieldName: 'foto', type: 'upload'}
+]
+
+export default class TersangkaNew extends React.Component {
   state = {
     loading: false,
   }
@@ -22,27 +31,24 @@ export default class BarangBuktiList extends React.Component {
   render(){
     //refer navigation path in component navigator , buttonGroup is button that will be render in bottom animation menu
     const buttonGroup = (
-      <React.Fragment>
-        <Button
-          title="BUAT BARANG BUKTI"
-          type="outline"
-          containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('barangbukti.new')}
-        />
-        <Button
-          title="EDIT BARANG BUKTI"
-          type="outline"
-          containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('barangbukti.edit')}
-        />
-      </React.Fragment>
+      <Button
+        title="Solid Button"
+        type="outline"
+        containerStyle={{padding:10}}
+      />
     )
     return (
       <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>
-          Ini Barang Bukti List
-        </Text>
+        <FormGroup title="FORM TERSANGKA" formData={formData}/>
+        <Button
+          title="Buat Tersangka"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={() => {
+            this.props.navigation.navigate('penangkapan.edit')
+          }}
+        />
         <Separator />
       </SafeAreaView>
       </NavigationBar>

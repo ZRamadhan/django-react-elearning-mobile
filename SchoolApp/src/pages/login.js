@@ -11,6 +11,11 @@ function Separator() {
   return <View style={styles.separator} />;
 }
 
+const formData = [
+  {label: 'Username', name: 'Username', fieldName: 'username'},
+  {label: 'Password', name: 'Password', fieldName: 'password', type:'password'},
+]
+
 class Login extends React.Component {
   onSubmit = async() => {
     await this.props.dispatch(login())
@@ -27,7 +32,7 @@ class Login extends React.Component {
     return (
       <NavigationBar renderButton={buttonGroup} loading={false} hideFilter hideNavbar>
         <SafeAreaView style={styles.container}>
-          <FormGroup/>
+          <FormGroup title="Login" formData={formData}/>
           <Button
             title="Go to Dashboard"
             type="outline"

@@ -9,10 +9,12 @@ import PenangkapanList from '../pages/penangkapan/list';
 import PenangkapanEdit from '../pages/penangkapan/edit';
 import PenangkapanNew from '../pages/penangkapan/new';
 import PenangkapanView from '../pages/penangkapan/detail';
-import TersangkaList from '../pages/tersangka/edit';
+import TersangkaNew from '../pages/tersangka/new';
+import BarangBuktiNew from '../pages/barangbukti/new';
+import TersangkaList from '../pages/tersangka/list';
 import TersangkaView from '../pages/tersangka/detail';
 import TersangkaEdit from '../pages/tersangka/edit';
-import BarangBuktiList from '../pages/barangbukti/edit';
+import BarangBuktiList from '../pages/barangbukti/list';
 import BarangBuktiView from '../pages/barangbukti/detail';
 import BarangBuktiEdit from '../pages/barangbukti/edit';
 import Login from '../pages/login';
@@ -50,9 +52,11 @@ const LKNNavigator = createStackNavigator({
   'tersangka.details': { screen: mapNavigationStateParamsToProps(TersangkaView) },
   'tersangka.list': { screen: mapNavigationStateParamsToProps(TersangkaList) },
   'tersangka.edit': { screen: mapNavigationStateParamsToProps(TersangkaEdit) },
+  'tersangka.new': { screen: mapNavigationStateParamsToProps(TersangkaNew) },
   'barangbukti.list': { screen: mapNavigationStateParamsToProps(BarangBuktiList) },
   'barangbukti.details': { screen: mapNavigationStateParamsToProps(BarangBuktiView) },
   'barangbukti.edit': { screen: mapNavigationStateParamsToProps(BarangBuktiEdit) },
+  'barangbukti.new': { screen: mapNavigationStateParamsToProps(BarangBuktiNew) },
 }, {
   headerMode: 'none',
 });

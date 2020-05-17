@@ -2,11 +2,18 @@ import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
+import FormGroup from '../../component/form/formGroup';
 import NavigationBar from '../../component/navigationBar';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
+
+const formData = [
+  {label: 'SP KAP', name: 'No Penangkapan', fieldName: 'no_penangkapan'},
+  {label: 'TANGGAL PENANGKAPAN', name: 'Tanggal Penangkapan', fieldName: 'tanggal_penangkapan', type: 'date'},
+  {label: 'MASA BERAKHIR PENANGKAPAN', name: 'Masa Berakhir Penangkapan', fieldName: 'masa_berakhir_penangkapan', type: 'date'},
+]
 
 export default class PenangkapanEdit extends React.Component {
   state = {
@@ -22,18 +29,33 @@ export default class PenangkapanEdit extends React.Component {
   render(){
     //refer navigation path in component navigator , buttonGroup is button that will be render in bottom animation menu
     const buttonGroup = (
-      <Button
-        title="Solid Button"
-        type="outline"
-        containerStyle={{padding:10}}
-      />
+      <React.Fragment>
+        <Button
+          title="LIST TERSANGKA"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={()=>this.props.navigation.navigate('tersangka.list')}
+        />
+        <Button
+          title="LIST BARANG BUKTI"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={()=>this.props.navigation.navigate('barangbukti.list')}
+        />
+      </React.Fragment>
     )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar renderButton={buttonGroup} loading={this.state.loading} hideFilter>
         <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>
-          Ini Penangkapan Edit
-        </Text>
+        <FormGroup title="Edit Penangkapan" formData={formData}></FormGroup>
+        <Button
+          title="Edit Penangkapan"
+          type="outline"
+          containerStyle={{padding:10}}
+          onPress={() => {
+            this.props.navigation.pop()
+          }}
+        />
         <Separator />
       </SafeAreaView>
       </NavigationBar>

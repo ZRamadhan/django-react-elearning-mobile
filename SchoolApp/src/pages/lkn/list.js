@@ -37,18 +37,6 @@ export default class LKNLIST extends React.Component {
           containerStyle={{padding:10}}
           onPress={()=>this.props.navigation.navigate('penangkapan.list')}
         />
-        <Button
-          title="LIST TERSANGKA"
-          type="outline"
-          containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('tersangka.list')}
-        />
-        <Button
-          title="LIST BARANG BUKTI"
-          type="outline"
-          containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('barangbukti.list')}
-        />
       </React.Fragment>
     )
 

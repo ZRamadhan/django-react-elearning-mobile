@@ -38,9 +38,9 @@ const DatePicker = (props) => {
             onChange={onChange}
           />
         )}
-        <Icon name='calendar' />
+        <Icon name='calendar' style={{fontSize:16}}/>
         <TouchableOpacity onPress={showDatepicker}>
-          <Text style={{paddingLeft:5, fontSize:14, color:'gray'}}>{date ? moment(date).format("DD/MM/YYYY") : props.placeholder}</Text>
+          <Text style={{padding:5, fontSize:15, color:'gray'}}>{date ? moment(date).format("DD/MM/YYYY") : "Atur Tanggal"}</Text>
         </TouchableOpacity>
       </InputGroup>
     </View>

@@ -1,21 +1,17 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { Button } from 'react-native-elements'
+import FormGroup from '../../component/form/formGroup'
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
-import FormGroup from '../../component/form/formGroup';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
 
-const formData = [
-  {label: 'No. LKN', name: 'LKN', fieldName: 'LKN'},
-  {label: 'Tanggal', name: 'Tanggal Dibuat', fieldName: 'tgl_dibuat', type:'date'},
-]
-
-export default class LKNNew extends React.Component {
+export default class BarangBuktiNew extends React.Component {
   state = {
+    form: {},
     loading: false,
   }
 
@@ -26,6 +22,21 @@ export default class LKNNew extends React.Component {
   }
 
   render(){
+    const dropdown = [{value:'narkotika', name:'narkotika'}, {value:'non narkotika', name:'non narkotika'}];
+
+    let formData = [
+      {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
+      {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
+      {label: 'Tap Sita', name: 'Tap Sita', fieldName: 'tap_sita'},
+    ]
+
+    if(this.state.form.jenis_barang === 'narkotika'){
+      formData.push({label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'})
+      formData.push({label: 'Nomor Lab', name: 'Nomor Lab', fieldName: 'nomor_lab'})
+    }
+
+    formData.push({label: 'Jenis Barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdown})
+
     //refer navigation path in component navigator , buttonGroup is button that will be render in bottom animation menu
     const buttonGroup = (
       <Button
@@ -35,15 +46,15 @@ export default class LKNNew extends React.Component {
       />
     )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar renderButton={buttonGroup} loading={this.state.loading} hideFilter>
         <SafeAreaView style={styles.container}>
-        <FormGroup title="Form LKN" formData={formData} />
+        <FormGroup title="Form Barang Bukti" formData={formData}/>
         <Button
-          title="Buat LKN"
+          title="Buat Barang Bukti"
           type="outline"
           containerStyle={{padding:10}}
           onPress={() => {
-            this.props.navigation.navigate('lkn.list')
+            this.props.navigation.navigate('penangkapan.edit')
           }}
         />
         <Separator />
