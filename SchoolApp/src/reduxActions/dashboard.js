@@ -517,7 +517,7 @@ export function login(){
         password: 'admin',
       });
       await AsyncStorage.setItem('token', result.data.token)
-      await AsyncStorage.setItem('user', result.data.user)
+      await AsyncStorage.setItem('user', JSON.stringify(result.data.user))
     } catch(e){
       console.log('error', e)
     }

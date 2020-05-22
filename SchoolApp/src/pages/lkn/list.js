@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
-import { Button } from 'react-native-elements'
+import { Button } from 'react-native-elements';
+import { Icon } from 'native-base';
 import { get_token } from '../../helper/requestHelper';
 import Constants from 'expo-constants';
+import RefreshableList from '../../component/refreshableList'
 import NavigationBar from '../../component/navigationBar';
 
 function Separator() {
@@ -26,14 +28,16 @@ export default class LKNLIST extends React.Component {
     const buttonGroup = (
       <React.Fragment>
         <Button
-          title="BUAT LKN"
+          title="Buat LKN"
           type="outline"
+          icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='create' />}
           containerStyle={{padding:10}}
           onPress={()=>this.props.navigation.navigate('lkn.new')}
         />
         <Button
-          title="LIST PENANGKAPAN"
+          title="List Penangkapan"
           type="outline"
+          icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='list' />}
           containerStyle={{padding:10}}
           onPress={()=>this.props.navigation.navigate('penangkapan.list')}
         />
@@ -41,12 +45,9 @@ export default class LKNLIST extends React.Component {
     )
 
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading} home>
+      <NavigationBar isHome renderButton={buttonGroup} loading={this.state.loading} home>
         <SafeAreaView style={styles.container}>
-          <Text style={styles.title}>
-            Ini LKN List
-          </Text>
-          <Separator />
+          <RefreshableList/>
         </SafeAreaView>
       </NavigationBar>
     )
@@ -56,7 +57,7 @@ export default class LKNLIST extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight,
+    marginTop: 5,
     marginHorizontal: 16,
   },
   title: {

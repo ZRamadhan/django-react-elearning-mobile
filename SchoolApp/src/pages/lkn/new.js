@@ -35,7 +35,7 @@ export default class LKNNew extends React.Component {
       />
     )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar hideSearch disableMenu renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
         <FormGroup title="Form LKN" formData={formData} />
         <Button

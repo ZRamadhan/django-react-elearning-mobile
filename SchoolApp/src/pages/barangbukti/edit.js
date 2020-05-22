@@ -50,7 +50,7 @@ export default class BarangBuktiEdit extends React.Component {
         <SafeAreaView style={styles.container}>
         <FormGroup title="Edit Barang Bukti" formData={formData}/>
         <Button
-          title="Buat LKN"
+          title="Edit Barang Bukti"
           type="outline"
           containerStyle={{padding:10}}
           onPress={() => {

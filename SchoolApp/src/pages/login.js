@@ -22,15 +22,8 @@ class Login extends React.Component {
   }
 
   render(){
-    const buttonGroup = (
-      <Button
-        title="Solid Button"
-        type="outline"
-        containerStyle={{padding:10}}
-      />
-    )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={false} hideFilter hideNavbar>
+      <NavigationBar hideSearch loading={false} hideFilter hideNavbar>
         <SafeAreaView style={styles.container}>
           <FormGroup title="Login" formData={formData}/>
           <Button
