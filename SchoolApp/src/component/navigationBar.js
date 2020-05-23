@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import ReactNative, { ScrollView, TouchableWithoutFeedback } from 'react-native';
+import ReactNative, { ScrollView, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
-import { Icon } from 'react-native-elements'
+import { InputGroup, Text, Icon } from 'native-base';
 import DatePicker from '../component/datePicker.android';
 import ContentLoader from 'react-native-easy-content-loader';
 import { withNavigation } from 'react-navigation';
@@ -26,7 +26,21 @@ class NavigationBar extends Component {
     this.state = {
       bounceValue: new Animated.Value(1000),  //This is the initial position of the subview
       showFilter: false,
+      hideContent: false,
     };
+  }
+
+  _toggleFilter = () => {
+    this.setState({showFilter:true});
+    this._toggleSubview()
+  }
+
+  _onSearchFocus = () => {
+    this.setState({ hideContent: true })
+  }
+
+  _onSearchBlur = () => {
+    this.setState({ hideContent: false }) 
   }
 
   _toggleSubview(value) {
@@ -53,9 +67,10 @@ class NavigationBar extends Component {
   }
 
   render() {
+    const hideNavbar = this.props.hideNavbar ? true : this.state.hideContent
     return (
       <View style={styles.container}>
-          {!this.props.hideNavbar && (
+          {(!hideNavbar) && (
             <View style={{
               height: 60,
               backgroundColor: 'white',
@@ -66,16 +81,15 @@ class NavigationBar extends Component {
             }}>
               <Button
                   icon={
-                    <Icon
-                      name='navicon'
-                      type='evilicon'
-                      color='#517fa4'
-                    />
+                    <Icon style={{fontSize:14, color:'#517fa4', padding:5}} name='ios-menu' />
                   }
                   title="Menu"
                   raised
-                  disabled={this.props.loading}
-                  onPress={()=> {this._toggleSubview()}}
+                  disabled={this.props.disableMenu ? true : this.props.loading}
+                  onPress={()=> {
+                    this.setState({showFilter: false})
+                    this._toggleSubview()
+                  }}
                   containerStyle={styles.button}
                   type="outline"
                 />
@@ -90,11 +104,7 @@ class NavigationBar extends Component {
                 <Button
                   title="Notification"
                   icon={
-                    <Icon
-                      name='bell'
-                      type='evilicon'
-                      color='#517fa4'
-                    />
+                    <Icon style={{fontSize:14, color:'#517fa4', padding:5}} name='ios-cloud'/>
                   }
                   raised
                   containerStyle={styles.button}
@@ -102,53 +112,73 @@ class NavigationBar extends Component {
                 />
             </View>
           )}
-          {this.state.showFilter && (
-            <View>
-              <SearchBar />
-              <DatePicker placeholder='Starting Date'/>
-              <DatePicker placeholder='End Date'/>
-              <Button
-                  title="Apply Filter"
-                  icon={
-                    <Icon
-                      name='gear'
-                      type='evilicon'
-                      color='#517fa4'
-                    />
-                  }
-                  raised
-                  containerStyle={styles.buttonFilter}
-                  type="outline"
-              />
-            </View>
+          {!this.props.hideSearch && (
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('searchBar')}>
+              <InputGroup style={{margin:10, marginBottom: 20}}>
+                  <Icon name='ios-search' />
+                  <Text style={{padding:10, width:'80%'}}>Search</Text>
+                  <TouchableOpacity onPress={this._toggleFilter}><Icon name='funnel' /></TouchableOpacity>
+              </InputGroup>
+            </TouchableWithoutFeedback>
           )}
           <Animated.View
             style={[styles.subView,
               {transform: [{translateY: this.state.bounceValue}]}]}
           >
-            {!this.props.hideFilter &&
+            {this.state.showFilter && (
+              <ScrollView>
+                <DatePicker placeholder='Starting Date'/>
+                <DatePicker placeholder='End Date'/>
+                <View style={{width:'100%', marginTop:10, flex:1, flexDirection: 'row', justifyContent: 'space-around'}}>
+                  <Button
+                      title="Dari Yang Terbaru"
+                      icon={
+                        <Icon style={{fontSize:14, color:'#517fa4', padding:5}} name='funnel' />
+                      }
+                      raised
+                      containerStyle={styles.buttonFilter}
+                      type="outline"
+                  />
+                  <Button
+                      title="Dari Yang Terlama"
+                      icon={
+                        <Icon style={{fontSize:14, color:'#517fa4', padding:5}} name='funnel' />
+                      }
+                      raised
+                      containerStyle={styles.buttonFilter}
+                      type="outline"
+                  />
+                </View>
                 <Button
-                  title={!this.state.showFilter ? "Show Filter" : "Hidden Filter"}
-                  icon={
-                    <Icon
-                      name={!this.state.showFilter ? "eye" : "close"}
-                      type='evilicon'
-                      color='#517fa4'
-                    />
-                  }
-                  raised
-                  onPress={()=> {
-                    this.setState(prevState => ({
-                      showFilter: !prevState.showFilter
-                    }));
-                  }}
-                  containerStyle={styles.button}
-                  type="outline"
+                    title="Bersihkan Filter"
+                    icon={
+                      <Icon style={{fontSize:14, color:'#517fa4', padding:5}} name='ios-close' />
+                    }
+                    buttonStyle={{
+                      borderColor:'red'
+                    }}
+                    raised
+                    containerStyle={{padding:10, margin:10}}
+                    type="outline"
                 />
-              }
-            <ScrollView showsVerticalScrollIndicator={false}>
-              {this.props.renderButton}              
-            </ScrollView>
+              </ScrollView>
+            )}
+            {!this.state.showFilter && (
+              <React.Fragment>
+                {!this.props.isHome && (
+                  <Button
+                    title="Back To Home"
+                    type="outline"
+                    icon={<Icon style={{fontSize:20, color:'#517fa4', padding:5}} name='ios-home' />}
+                    containerStyle={styles.buttonFilter}
+                    onPress={()=>this.props.navigation.replace('lkn.list')}
+                  />
+                )}
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  {this.props.renderButton}              
+                </ScrollView>
+              </React.Fragment> 
+            )}
           </Animated.View>
           <ContentLoader
             active
@@ -157,12 +187,14 @@ class NavigationBar extends Component {
             pRows={25}
             pWidth={data}
            >
-            <TouchableWithoutFeedback onPress={()=> {
-                this._toggleSubview('false')
-              }}
-            >
-              {this.props.children}
-            </TouchableWithoutFeedback>
+            {!this.state.hideContent && (
+              <TouchableWithoutFeedback onPress={()=> {
+                  this._toggleSubview('false')
+                }}
+              >
+                {this.props.children}
+              </TouchableWithoutFeedback>
+            )}
            </ContentLoader>
       </View>
     );
