@@ -4,11 +4,11 @@ import { StyleSheet, View, Text } from 'react-native';
 
 export default class Inputs extends Component {
     render() {
-        let input = <Input style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder}/>
+        let input = <Input onChangeText={(text) => {this.props.onFormChange(this.props.fieldName, text)}} style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder}/>
         if(this.props.type === 'number'){
-          input = <Input style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder} keyboardType = 'numeric'/>
+          input = <Input onChangeText={(text) => {this.props.onFormChange(this.props.fieldName, text)}} style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder} keyboardType = 'numeric'/>
         } else if(this.props.type === 'password'){
-          input = <Input style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder} secureTextEntry/>
+          input = <Input onChangeText={(text) => {this.props.onFormChange(this.props.fieldName, text)}} style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder} secureTextEntry/>
         }
         return (
           <View style={styles.container}>

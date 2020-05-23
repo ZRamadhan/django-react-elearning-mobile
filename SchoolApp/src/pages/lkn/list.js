@@ -1,15 +1,17 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
+import { connect } from 'react-redux';
 import { Button } from 'react-native-elements'
 import { get_token } from '../../helper/requestHelper';
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
+import { get_lkn_by_penyidik } from '../../reduxActions/dashboard';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
 
-export default class LKNLIST extends React.Component {
+class LKNLIST extends React.Component {
   state = {
     loading: false,
   }
@@ -18,7 +20,10 @@ export default class LKNLIST extends React.Component {
     this.setState({loading:true})
     //do api call here
     const token = await get_token()
-    setTimeout(() => this.setState({loading:false}), 2000);
+    await this.props.dispatch(get_lkn_by_penyidik(token))
+    this.setState({loading:false})
+
+    // setTimeout(() => this.setState({loading:false}), 2000);
   }
 
   render(){
@@ -53,6 +58,15 @@ export default class LKNLIST extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  const { dashboard } = state
+  console.log(dashboard.lknTableData)
+  return {
+    error: dashboard.error,
+    lknTableData: dashboard.lknTableData,
+  }
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -73,3 +87,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
+
+export default connect(mapStateToProps)(LKNLIST)

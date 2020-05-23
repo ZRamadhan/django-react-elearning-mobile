@@ -1,9 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
+import { connect } from 'react-redux';
 import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
 import FormGroup from '../../component/form/formGroup';
+import { createLKN } from '../../reduxActions/dashboard';
+import { get_token } from '../../helper/requestHelper';
 
 function Separator() {
   return <View style={styles.separator} />;
@@ -14,15 +17,46 @@ const formData = [
   {label: 'Tanggal', name: 'Tanggal Dibuat', fieldName: 'tgl_dibuat', type:'date'},
 ]
 
-export default class LKNNew extends React.Component {
+class LKNNew extends React.Component {
   state = {
     loading: false,
+    form: {}
   }
 
-  componentDidMount(){
+  async componentDidMount(){
+    const token = await get_token()
     this.setState({loading:true})
     //do api call here
     setTimeout(() => this.setState({loading:false}), 2000);
+  }
+
+  onFormChange = (fieldName, e) => {
+    console.log(fieldName, e)
+    const formObj = {...this.state.form};
+    if(!e.target){
+      formObj[fieldName] = e
+      this.setState({
+          form: formObj,
+      })
+    } else {
+      formObj[fieldName] = e.target.value
+      this.setState({
+          form: formObj,
+      })
+    }
+  }
+
+  onSubmit = async() => {
+    this.setState({ isLoading: true })
+    const token = await get_token()
+    await this.props.dispatch(createLKN(token, this.state.form))
+    if(!this.props.error){
+      this.props.navigation.navigate('lkn.list')
+    } else {
+      console.log(this.props.error)
+      return;
+    }
+    this.setState({ isLoading: false })
   }
 
   render(){
@@ -37,19 +71,25 @@ export default class LKNNew extends React.Component {
     return (
       <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
-        <FormGroup title="Form LKN" formData={formData} />
+        <FormGroup title="Form LKN" formData={formData} onFormChange={this.onFormChange}/>
         <Button
           title="Buat LKN"
           type="outline"
           containerStyle={{padding:10}}
-          onPress={() => {
-            this.props.navigation.navigate('lkn.list')
-          }}
+          onPress={this.onSubmit}
         />
         <Separator />
       </SafeAreaView>
       </NavigationBar>
     )
+  }
+}
+
+function mapStateToProps(state) {
+  const { dashboard } = state
+  return {
+    error: dashboard.error,
+    lknCreated: dashboard.lknCreated,
   }
 }
 
@@ -73,3 +113,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
+
+export default connect(mapStateToProps)(LKNNew)

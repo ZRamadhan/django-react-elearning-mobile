@@ -14,6 +14,7 @@ const DatePicker = (props) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
+    props.onFormChange(props.fieldName, moment(currentDate).format("DD-MM-YYYY"))
   };
 
   const showMode = currentMode => {

@@ -302,7 +302,7 @@ export function get_lkn_by_penyidik(token, id = null, filter = null) {
       url = `/api/lkn/?tgl_dibuat_mulai=${filter['startDate']}&tgl_dibuat_akhir=${filter['endDate']}`
     }
     else {
-      url = `/api/lkn/`
+      url = `/mobile-api/lkn/`
     }
     const result = await request(url, {
       method: 'GET',
@@ -311,6 +311,7 @@ export function get_lkn_by_penyidik(token, id = null, filter = null) {
         'Authorization': `Bearer ${token}`
       }
     })
+    console.log('ini result', result.data)
     if(result instanceof Error){
       return
     }
@@ -517,7 +518,7 @@ export function login(){
         password: 'admin',
       });
       await AsyncStorage.setItem('token', result.data.token)
-      await AsyncStorage.setItem('user', result.data.user)
+      await AsyncStorage.setItem('user', JSON.stringify(result.data.user))
     } catch(e){
       console.log('error', e)
     }
