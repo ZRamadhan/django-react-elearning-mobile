@@ -22,7 +22,7 @@ class LKNLIST extends React.Component {
     this.setState({loading:true})
     //do api call here
     const token = await get_token()
-    await this.props.dispatch(get_lkn_by_penyidik(token))
+    await this.props.dispatch(get_lkn_by_penyidik(token, null, null, 1))
     this.setState({loading:false})
 
     // setTimeout(() => this.setState({loading:false}), 2000);
@@ -40,11 +40,18 @@ class LKNLIST extends React.Component {
           onPress={()=>this.props.navigation.navigate('lkn.new')}
         />
         <Button
-          title="List Penangkapan"
+          title="List Tersangka"
           type="outline"
           icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='list' />}
           containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('penangkapan.list')}
+          onPress={()=>this.props.navigation.navigate('tersangka.list')}
+        />
+        <Button
+          title="List Barang-Bukti"
+          type="outline"
+          icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='list' />}
+          containerStyle={{padding:10}}
+          onPress={()=>this.props.navigation.navigate('barangbukti.list')}
         />
       </React.Fragment>
     )

@@ -292,7 +292,7 @@ export function fetchalluser(token, id = null) {
   }
 }
 // LKN CRUD
-export function get_lkn_by_penyidik(token, id = null, filter = null) {
+export function get_lkn_by_penyidik(token, id = null, filter = null, page = null) {
   return async dispatch => {
     let url = ''
     if (id) {
@@ -300,6 +300,9 @@ export function get_lkn_by_penyidik(token, id = null, filter = null) {
     }
     else if (filter){
       url = `/api/lkn/?tgl_dibuat_mulai=${filter['startDate']}&tgl_dibuat_akhir=${filter['endDate']}`
+    }
+    else if (page){
+      url = `/mobile-api/lkn/?page=${page}`
     }
     else {
       url = `/mobile-api/lkn/`
@@ -311,7 +314,7 @@ export function get_lkn_by_penyidik(token, id = null, filter = null) {
         'Authorization': `Bearer ${token}`
       }
     })
-    console.log('ini result', result.data)
+    console.log('ini url',url)
     if(result instanceof Error){
       return
     }
