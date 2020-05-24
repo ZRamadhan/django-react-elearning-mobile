@@ -292,20 +292,20 @@ export function fetchalluser(token, id = null) {
   }
 }
 // LKN CRUD
+export function reset_lkn_table(){
+  return {
+    type: 'RESET_LKN_TABLE',
+  }
+}
+
 export function get_lkn_by_penyidik(token, id = null, filter = null, page = null) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     let url = ''
     if (id) {
       url = `/api/lkn/${id}`
     }
     else if (filter){
       url = `/api/lkn/?tgl_dibuat_mulai=${filter['startDate']}&tgl_dibuat_akhir=${filter['endDate']}`
-    }
-    else if (page){
-      url = `/mobile-api/lkn/?page=${page}`
-    }
-    else {
-      url = `/mobile-api/lkn/`
     }
     const result = await request(url, {
       method: 'GET',
@@ -315,9 +315,62 @@ export function get_lkn_by_penyidik(token, id = null, filter = null, page = null
       }
     })
     if(result instanceof Error){
-      return
+      return null
     }
+   
     dispatch(receive_lkn_table(result.data))
+  }
+}
+
+export function get_lkn_mobile(page, data, token){
+  return async (dispatch, getState) => {
+    const result = await request(`/mobile-api/lkn/?page=${page}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    if(result instanceof Error){
+      return null
+    }
+    
+    return data.concat(result.data.results)
+  }
+}
+
+export function get_tersangka_mobile(page, data, token){
+  return async (dispatch, getState) => {
+    const result = await request(`/api/tsk-edit/?page=${page}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    if(result instanceof Error){
+      return null
+    }
+    console.log('page', page)
+    console.log('result', result.data)
+    return data.concat(result.data)
+  }
+}
+
+export function get_barangbukti_mobile(page, data, token){
+  return async (dispatch, getState) => {
+    const result = await request(`/api/bb-edit/?page=${page}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    if(result instanceof Error){
+      return null
+    }
+    console.log('result barangbukti', result)
+    return data.concat(result.data.results)
   }
 }
 
@@ -473,7 +526,7 @@ export function editpenangkapan(token, data, id) {
 }
 
 // Proses tersangka Edit and list
-export function get_tersangka_list(token, id = null, pnkp_id = null, page = null) {
+export function get_tersangka_list(token, id = null, pnkp_id = null) {
   return dispatch => {
     let url = ''
     if (id) {

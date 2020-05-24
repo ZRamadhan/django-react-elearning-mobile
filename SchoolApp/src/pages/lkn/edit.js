@@ -32,7 +32,7 @@ export default class LKNEdit extends React.Component {
       <NavigationBar hideSearch disableMenu renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
         <Text style={styles.title}>
-          Ini LKN Edit
+          Ini LKN Edit - {this.props.id}
         </Text>
         <Separator />
       </SafeAreaView>

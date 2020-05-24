@@ -32,7 +32,7 @@ export default class LKNDetail extends React.Component {
       <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
         <Text style={styles.title}>
-          Ini LKN Detail
+          Ini LKN Detail - - {this.props.id}
         </Text>
         <Separator />
       </SafeAreaView>
