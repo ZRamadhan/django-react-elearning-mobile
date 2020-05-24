@@ -7,7 +7,6 @@ import { get_token } from '../../helper/requestHelper';
 import Constants from 'expo-constants';
 import RefreshableList from '../../component/refreshableList'
 import NavigationBar from '../../component/navigationBar';
-import { get_lkn_by_penyidik } from '../../reduxActions/dashboard';
 
 function Separator() {
   return <View style={styles.separator} />;

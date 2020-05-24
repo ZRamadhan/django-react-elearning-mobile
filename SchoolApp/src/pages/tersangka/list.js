@@ -3,6 +3,7 @@ import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
+import RefreshableList from '../../component/refreshableList'
 
 function Separator() {
   return <View style={styles.separator} />;
@@ -40,11 +41,8 @@ export default class TersangkaList extends React.Component {
     return (
       <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>
-          Ini Tersangka List
-        </Text>
-        <Separator />
-      </SafeAreaView>
+          <RefreshableList page='TSK'/>
+        </SafeAreaView>
       </NavigationBar>
     )
   }

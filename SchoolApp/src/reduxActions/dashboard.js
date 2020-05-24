@@ -339,6 +339,41 @@ export function get_lkn_mobile(page, data, token){
   }
 }
 
+export function get_tersangka_mobile(page, data, token){
+  return async (dispatch, getState) => {
+    const result = await request(`/api/tsk-edit/?page=${page}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    if(result instanceof Error){
+      return null
+    }
+    console.log('page', page)
+    console.log('result', result.data)
+    return data.concat(result.data)
+  }
+}
+
+export function get_barangbukti_mobile(page, data, token){
+  return async (dispatch, getState) => {
+    const result = await request(`/api/bb-edit/?page=${page}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    if(result instanceof Error){
+      return null
+    }
+    console.log('result barangbukti', result)
+    return data.concat(result.data.results)
+  }
+}
+
 export function verify_token(token) {
   return async dispatch => {
     const result = await request('/get-token/token-verify/', {
@@ -491,7 +526,7 @@ export function editpenangkapan(token, data, id) {
 }
 
 // Proses tersangka Edit and list
-export function get_tersangka_list(token, id = null, pnkp_id = null, page = null) {
+export function get_tersangka_list(token, id = null, pnkp_id = null) {
   return dispatch => {
     let url = ''
     if (id) {
@@ -500,10 +535,6 @@ export function get_tersangka_list(token, id = null, pnkp_id = null, page = null
     else if (pnkp_id){
       url = `/api/tsk-edit/?no_penangkapan_id__id=${pnkp_id}`
     }
-    else if (page){
-      url = `/api/tsk-edit/?page=${page}`
-    }
-
     else {
       url = `/api/tsk-edit/`
     }

@@ -5,10 +5,14 @@ import { StyleSheet, View, Text, ActivityIndicator, FlatList, Image, RefreshCont
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { get_token } from '../helper/requestHelper'
-import { get_lkn_mobile } from '../reduxActions/dashboard';
-import LKNCard from './card/lknCard'
+import { get_lkn_mobile, get_tersangka_mobile, get_barangbukti_mobile } from '../reduxActions/dashboard';
+import LKNCard from './card/lknCard';
+import TersangkaCard from './card/tersangkaCard';
+import BarangBuktiCard from './card/barangBuktiCard';
 
 const renderLKN = ({ item }) => (<LKNCard item={item} />);
+const renderTersangka = ({ item }) => (<TersangkaCard item={item} />);
+const renderBarangBukti = ({ item }) => (<BarangBuktiCard item={item} />);
 
 class RefreshableList extends Component {
   constructor(props) {
@@ -33,7 +37,14 @@ class RefreshableList extends Component {
 
     this.setState({ loading: true })
     const token = await get_token()
-    const result = await this.props.dispatch(get_lkn_mobile(page, this.state.data, token))
+    let result = ''
+    if(this.props.page === 'LKN'){
+      result = await this.props.dispatch(get_lkn_mobile(this.page, this.state.data, token))
+    } else if(this.props.page === 'TSK'){
+      result = await this.props.dispatch(get_tersangka_mobile(this.page, this.state.data, token))
+    } else if(this.props.page === 'BB'){
+      result = await this.props.dispatch(get_barangbukti_mobile(this.page, this.state.data, token))
+    }
     if(result === null){
       this.setState({ loading: false, error: true})
     } else {
@@ -66,7 +77,7 @@ class RefreshableList extends Component {
   };
 
   handleLoadMore = () => {
-    if (!this.state.loading && !this.state.error) {
+    if (!this.state.loading) {
       this.page = this.page + 1; // increase page by 1
       this.fetchUser(this.page); // method for API call 
     }
@@ -79,7 +90,14 @@ class RefreshableList extends Component {
     this.setState({ isRefreshing: true })
     const token = await get_token()
     this.page = 1
-    const result = await this.props.dispatch(get_lkn_mobile(this.page, [], token))
+    let result = '';
+    if(this.props.page === 'LKN'){
+      result = await this.props.dispatch(get_lkn_mobile(this.page, [], token))
+    } else if(this.props.page === 'TSK'){
+      result = await this.props.dispatch(get_tersangka_mobile(this.page, [], token))
+    } else if(this.props.page === 'BB'){
+      result = await this.props.dispatch(get_barangbukti_mobile(this.page, [], token))
+    }
     this.setState({ isRefreshing: false, data: result })
   }
 
@@ -89,6 +107,15 @@ class RefreshableList extends Component {
           width: '100%',
           height: '100%'
         }}><ActivityIndicator style={{ color: '#000' }} /></View>;
+      }
+
+      let renderItem;
+      if(this.props.page === 'LKN'){
+        renderItem = renderLKN;
+      } else if(this.props.page === 'TSK'){
+        renderItem = renderTersangka;
+      } else if(this.props.page === 'BB'){
+        renderItem = renderBarangBukti;
       }
       return (
         <View style={{ width: '100%', height: '100%' }}>
@@ -102,7 +129,7 @@ class RefreshableList extends Component {
               />
             }
             showsVerticalScrollIndicator={false}
-            renderItem={renderLKN}
+            renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={this.renderSeparator}
             removeClippedSubviews={true} // Unmount components when outside of window 
