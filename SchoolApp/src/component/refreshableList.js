@@ -1,129 +1,45 @@
 import React, { Component } from 'react';
 import { InputGroup, Icon, Input } from 'native-base';
+import { Button } from 'react-native-elements';
 import { StyleSheet, View, Text, ActivityIndicator, FlatList, Image, RefreshControl, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
+import { connect } from 'react-redux';
+import { get_token } from '../helper/requestHelper'
+import { get_lkn_mobile } from '../reduxActions/dashboard';
+import LKNCard from './card/lknCard'
 
-class MyListItem extends React.PureComponent {
-  render() {
-    return (
-        <View 
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 2,
-                  padding:10,
-                  borderColor: '#ddd',
-                  borderBottomWidth: 0,
-                  shadowColor: '#000',
-                  shadowOffset: { width: 2, height: 2 },
-                  shadowOpacity: 0.5,
-                  shadowRadius: 3,
-                  elevation: 2,
-                  margin: 10,
-                }}>
-                  <TouchableOpacity onPress={() => null}>
-                    <View style={{margin:5}}>
-                      <Text 
-                        style={{
-                          fontSize: 16,
-                          fontWeight: 'bold',
-                          justifyContent: 'center'
-                        }}>
-                        No LKN
-                      </Text>
-                      <Text 
-                        style={{
-                          fontSize: 13,
-                          justifyContent: 'center'
-                        }}>
-                        {this.props.item.location.street.name}
-                      </Text>
-                    </View>
-                    <View style={{margin:5}}>
-                      <Text 
-                        style={{
-                          fontSize: 16,
-                          fontWeight: 'bold',
-                          justifyContent: 'center'
-                        }}>
-                        Nama Penyidik
-                      </Text>
-                      <Text 
-                        style={{
-                          fontSize: 13,
-                          justifyContent: 'center'
-                        }}>
-                        {this.props.item.name.first}
-                      </Text>
-                    </View>
-                    <View style={{position:'absolute', right:5, bottom:5}}>
-                      <Text 
-                        style={{
-                          fontSize: 16,
-                          fontWeight: 'bold',
-                          justifyContent: 'center'
-                        }}>
-                        5 Januari 2020
-                      </Text>
-                    </View>
-                     <View style={{position:'absolute', right:5, top:5}}>
-                        <Menu>
-                          <MenuTrigger>
-                            <Icon style={{fontSize:20, color:'#517fa4', padding:5}} name='ios-menu' />
-                          </MenuTrigger>
-                          <MenuOptions style={{backgroundColor: '#F5FCFF'}}>
-                            <MenuOption onSelect={() => alert(`Save`)}>
-                              <Text style={{color: 'gray', fontWeight: 'bold'}}>Edit</Text>
-                            </MenuOption>
-                            <MenuOption onSelect={() => alert(`Delete`)} >
-                              <Text style={{color: 'red', fontWeight: 'bold'}}>Delete</Text>
-                            </MenuOption>
-                          </MenuOptions>
-                        </Menu>
-                      </View>
-                  </TouchableOpacity>
-                </View>
-    )
-  }
-}
+const renderLKN = ({ item }) => (<LKNCard item={item} />);
 
-const renderItem = ({ item }) => (<MyListItem item={item} />);
-
-export default class RefreshableList extends Component {
+class RefreshableList extends Component {
   constructor(props) {
     super(props);
     this.page = 1;
+    this.alreadyMount = false,
     this.state = {
       loading: false, // user list loading
       isRefreshing: false, //for pull to refresh
       data: [], //user list
-      error: ''
+      error: null
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.fetchUser(this.page) //Method for API call
   }
 
-   fetchUser(page) {
+   async fetchUser(page) {
    //stackexchange User API url
-    const url = `https://randomuser.me/api/?results=10`;
+    const { lknTableData } = this.props;
+
     this.setState({ loading: true })
-    axios.get(url)
-      .then(res => {
-        let listData = this.state.data;
-        let data = listData.concat(res.data.results)  //concate list with response
-        this.setState({ loading: false, data: data })
-      })
-      .catch(error => {
-        console.log('error', error)
-        this.setState({ loading: false, error: 'Something just went wrong' })
-      });
+    const token = await get_token()
+    const result = await this.props.dispatch(get_lkn_mobile(page, this.state.data, token))
+    if(result === null){
+      this.setState({ loading: false, error: true})
+    } else {
+      this.setState({ loading: false, data: result })
+    }
+    this.alreadyMount = true;
   }
     
   renderSeparator = () => {
@@ -150,23 +66,21 @@ export default class RefreshableList extends Component {
   };
 
   handleLoadMore = () => {
-    if (!this.state.loading) {
+    if (!this.state.loading && !this.state.error) {
       this.page = this.page + 1; // increase page by 1
       this.fetchUser(this.page); // method for API call 
     }
   };
 
-  onRefresh() {
+  async onRefresh() {
     this.setState({ isRefreshing: true }); // true isRefreshing flag for enable pull to refresh indicator
-    const url = `https://randomuser.me/api/?results=10`;
-    axios.get(url)
-      .then(res => {
-        let data = res.data.results
-        this.setState({ isRefreshing: false, data: data }) // false isRefreshing flag for disable pull to refresh indicator, and clear all data and store only first page data
-      })
-      .catch(error => {
-        this.setState({ isRefreshing: false, error: 'Something just went wrong' }) // false isRefreshing flag for disable pull to refresh
-      });
+    const { lknTableData } = this.props;
+
+    this.setState({ isRefreshing: true })
+    const token = await get_token()
+    this.page = 1
+    const result = await this.props.dispatch(get_lkn_mobile(this.page, [], token))
+    this.setState({ isRefreshing: false, data: result })
   }
 
   render() {
@@ -176,7 +90,6 @@ export default class RefreshableList extends Component {
           height: '100%'
         }}><ActivityIndicator style={{ color: '#000' }} /></View>;
       }
-      
       return (
         <View style={{ width: '100%', height: '100%' }}>
           <FlatList
@@ -189,19 +102,32 @@ export default class RefreshableList extends Component {
               />
             }
             showsVerticalScrollIndicator={false}
-            renderItem={renderItem}
+            renderItem={renderLKN}
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={this.renderSeparator}
             removeClippedSubviews={true} // Unmount components when outside of window 
             initialNumToRender={5} // Reduce initial render amount
             windowSize={7} // Reduce the window size
             ListFooterComponent={this.renderFooter.bind(this)}
-            onEndReachedThreshold={0.5}
-            onEndReached={this.handleLoadMore.bind(this)}
+          />
+           <Button
+              title="Load more..."
+              type="clear"
+              icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='undo' />}
+              containerStyle={{padding:10}}
+              onPress={()=>this.handleLoadMore()}
           />
         </View>
       );
     }
+}
+
+function mapStateToProps(state) {
+  const { dashboard } = state
+  return {
+    error: dashboard.error,
+    lknTableData: dashboard.lknTableData,
+  }
 }
 
 var styles = StyleSheet.create({
@@ -212,4 +138,7 @@ var styles = StyleSheet.create({
     height: 60,
   },
 });
+
+export default connect(mapStateToProps)(RefreshableList)
+
   

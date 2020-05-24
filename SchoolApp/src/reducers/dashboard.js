@@ -30,6 +30,11 @@ const dashboard = (state = initialState, action) => {
         ...state,
         lknTableData: action.data,
       };
+    case 'RESET_LKN_TABLE':
+      return {
+        ...state,
+        lknTableData: [],
+      }
     case 'RECEIVE_LKN_DATA':
       return {
         ...state,

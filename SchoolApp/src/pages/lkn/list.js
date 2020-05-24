@@ -13,6 +13,26 @@ function Separator() {
   return <View style={styles.separator} />;
 }
 
+const cardField = [
+  {
+    title: 'No.LKN',
+    dataIndex: 'LKN',
+    sorter: true,
+    search: true,
+  },
+  {
+    title: 'Nama Penyidik',
+    dataIndex: 'nama_penyidik',
+    sorter: true,
+    search: true,
+  },
+  {
+    title: 'Dibuat Pada',
+    dataIndex: 'tgl_dibuat',
+    sorter: true,
+  }
+]
+
 class LKNLIST extends React.Component {
   state = {
     loading: false,
@@ -22,10 +42,7 @@ class LKNLIST extends React.Component {
     this.setState({loading:true})
     //do api call here
     const token = await get_token()
-    await this.props.dispatch(get_lkn_by_penyidik(token, null, null, 1))
-    this.setState({loading:false})
-
-    // setTimeout(() => this.setState({loading:false}), 2000);
+    setTimeout(() => this.setState({loading:false}), 2000);
   }
 
   render(){
@@ -59,7 +76,7 @@ class LKNLIST extends React.Component {
     return (
       <NavigationBar isHome renderButton={buttonGroup} loading={this.state.loading} home>
         <SafeAreaView style={styles.container}>
-          <RefreshableList/>
+          <RefreshableList page='LKN'/>
         </SafeAreaView>
       </NavigationBar>
     )
@@ -68,7 +85,6 @@ class LKNLIST extends React.Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  console.log(dashboard.lknTableData)
   return {
     error: dashboard.error,
     lknTableData: dashboard.lknTableData,

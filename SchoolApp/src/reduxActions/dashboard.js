@@ -292,20 +292,20 @@ export function fetchalluser(token, id = null) {
   }
 }
 // LKN CRUD
+export function reset_lkn_table(){
+  return {
+    type: 'RESET_LKN_TABLE',
+  }
+}
+
 export function get_lkn_by_penyidik(token, id = null, filter = null, page = null) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     let url = ''
     if (id) {
       url = `/api/lkn/${id}`
     }
     else if (filter){
       url = `/api/lkn/?tgl_dibuat_mulai=${filter['startDate']}&tgl_dibuat_akhir=${filter['endDate']}`
-    }
-    else if (page){
-      url = `/mobile-api/lkn/?page=${page}`
-    }
-    else {
-      url = `/mobile-api/lkn/`
     }
     const result = await request(url, {
       method: 'GET',
@@ -314,11 +314,28 @@ export function get_lkn_by_penyidik(token, id = null, filter = null, page = null
         'Authorization': `Bearer ${token}`
       }
     })
-    console.log('ini url',url)
     if(result instanceof Error){
-      return
+      return null
     }
+   
     dispatch(receive_lkn_table(result.data))
+  }
+}
+
+export function get_lkn_mobile(page, data, token){
+  return async (dispatch, getState) => {
+    const result = await request(`/mobile-api/lkn/?page=${page}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    if(result instanceof Error){
+      return null
+    }
+    
+    return data.concat(result.data.results)
   }
 }
 
