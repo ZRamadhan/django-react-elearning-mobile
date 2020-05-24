@@ -29,10 +29,10 @@ export default class BarangBuktiDetail extends React.Component {
       />
     )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar hideSearch renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
         <Text style={styles.title}>
-          Ini Barang Bukti Detail
+          Ini Barang Bukti Detail -{this.props.id}
         </Text>
         <Separator />
       </SafeAreaView>

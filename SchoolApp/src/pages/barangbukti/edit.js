@@ -46,11 +46,11 @@ export default class BarangBuktiEdit extends React.Component {
       />
     )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar hideSearch disableMenu renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
         <FormGroup title="Edit Barang Bukti" formData={formData}/>
         <Button
-          title="Edit Barang Bukti"
+          title={`Edit Barang Bukti-${this.props.id}`}
           type="outline"
           containerStyle={{padding:10}}
           onPress={() => {
