@@ -12,16 +12,16 @@ export default class FormGroup extends Component {
     const FormList = (this.props.formData || []).map((data) => {
       if(data.type === 'input' || data.type === null || data.type === undefined){
         return (
-          <Input onFormChange={this.props.onFormChange} fieldName={data.fieldName} placeholder={data.label}/>
+          <Input onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label}/>
         )
       } else if(data.type === 'password'){
         return (
-          <Input onFormChange={this.props.onFormChange} fieldName={data.fieldName} placeholder={data.label} type='password'/>
+          <Input onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label} type='password'/>
         )
       }
       else if(data.type === 'date'){
         return (
-          <DatePicker onFormChange={this.props.onFormChange} fieldName={data.fieldName} placeholder={data.label}/>
+          <DatePicker onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label}/>
         ) 
       } else if(data.type === 'select'){
         return (

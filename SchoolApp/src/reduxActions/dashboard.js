@@ -314,7 +314,6 @@ export function get_lkn_by_penyidik(token, id = null, filter = null, page = null
         'Authorization': `Bearer ${token}`
       }
     })
-    console.log('ini url',url)
     if(result instanceof Error){
       return
     }
@@ -484,7 +483,7 @@ export function get_tersangka_list(token, id = null, pnkp_id = null, page = null
       url = `/api/tsk-edit/?no_penangkapan_id__id=${pnkp_id}`
     }
     else if (page){
-      url = `/api/tsk-edit/?page=${page}`
+      url = `/mobile-api/tersangka/?page=${page}`
     }
 
     else {
@@ -612,7 +611,7 @@ export function get_bb_list(token, id = null, pnkp_id = null, page = null) {
       url = `/api/bb-edit/?milik_tersangka_id__no_penangkapan_id__id=${pnkp_id}`
     }
     else if (page){
-      url = `/api/bb-edit/??page=${page}`
+      url = `/mobile-api/barangbukti/?page=${page}`
     }
     else {
       url = `/api/bb-edit/`

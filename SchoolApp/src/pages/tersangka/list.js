@@ -1,22 +1,28 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
+import { connect } from 'react-redux';
 import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
+import { get_token } from '../../helper/requestHelper';
+import { get_tersangka_list } from '../../reduxActions/dashboard';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
 
-export default class TersangkaList extends React.Component {
+class TersangkaList extends React.Component {
   state = {
     loading: false,
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     this.setState({loading:true})
     //do api call here
-    setTimeout(() => this.setState({loading:false}), 2000);
+    const token = await get_token()
+    await this.props.dispatch(get_tersangka_list(token, null, null, 1))
+    this.setState({loading:false})
+    // setTimeout(() => this.setState({loading:false}), 2000);
   }
 
   render(){
@@ -50,6 +56,15 @@ export default class TersangkaList extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  const { dashboard } = state
+  console.log(dashboard.tersangkaTableData)
+  return {
+    error: dashboard.error,
+    lknTableData: dashboard.tersangkaTableData,
+  }
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -70,3 +85,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
+
+export default connect(mapStateToProps)(TersangkaList)

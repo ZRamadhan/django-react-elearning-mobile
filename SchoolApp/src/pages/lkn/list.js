@@ -68,7 +68,6 @@ class LKNLIST extends React.Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  console.log(dashboard.lknTableData)
   return {
     error: dashboard.error,
     lknTableData: dashboard.lknTableData,
