@@ -29,10 +29,10 @@ export default class TersangkaDetail extends React.Component {
       />
     )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar hideSearch renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
         <Text style={styles.title}>
-          Ini Tersangka Detail
+          Ini Tersangka Detail - {this.props.id}
         </Text>
         <Separator />
       </SafeAreaView>

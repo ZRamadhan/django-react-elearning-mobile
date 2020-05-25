@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
-import { get_token } from '../../helper/requestHelper';
-import { get_bb_list } from '../../reduxActions/dashboard';
+import RefreshableList from '../../component/refreshableList';
 
 function Separator() {
   return <View style={styles.separator} />;
@@ -19,10 +18,7 @@ class BarangBuktiList extends React.Component {
   async componentDidMount(){
     this.setState({loading:true})
     //do api call here
-    const token = await get_token()
-    await this.props.dispatch(get_bb_list(token, null, null, 1))
-    this.setState({loading:false})
-    // setTimeout(() => this.setState({loading:false}), 2000);
+    setTimeout(() => this.setState({loading:false}), 2000);
   }
 
   render(){
@@ -46,11 +42,8 @@ class BarangBuktiList extends React.Component {
     return (
       <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>
-          Ini Barang Bukti List
-        </Text>
-        <Separator />
-      </SafeAreaView>
+          <RefreshableList page='BB'/>
+        </SafeAreaView>
       </NavigationBar>
     )
   }

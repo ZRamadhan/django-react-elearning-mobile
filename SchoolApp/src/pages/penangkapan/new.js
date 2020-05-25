@@ -36,7 +36,7 @@ export default class PenangkapanNew extends React.Component {
       />
     )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar hideSearch disableMenu renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
         <FormGroup title="BUAT PENANGKAPAN" formData={formData}></FormGroup>
         <Button

@@ -38,7 +38,7 @@ export default class TersangkaNew extends React.Component {
       />
     )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar hideSearch disableMenu renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
         <FormGroup title="FORM TERSANGKA" formData={formData}/>
         <Button

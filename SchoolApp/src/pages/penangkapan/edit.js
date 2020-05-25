@@ -45,7 +45,7 @@ export default class PenangkapanEdit extends React.Component {
       </React.Fragment>
     )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading} hideFilter>
+      <NavigationBar hideSearch disableMenu renderButton={buttonGroup} loading={this.state.loading} hideFilter>
         <SafeAreaView style={styles.container}>
         <FormGroup title="Edit Penangkapan" formData={formData}></FormGroup>
         <Button

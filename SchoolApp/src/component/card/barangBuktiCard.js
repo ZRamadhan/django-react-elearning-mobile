@@ -9,10 +9,20 @@ import {
 import { InputGroup, Icon, Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 
+const barangBuktiField = [{
+  title: 'Jenis Barang',
+  fieldName: 'jenis_barang'
+},{
+  title: 'Nama Barang',
+  fieldName: 'nama_barang'
+},{
+  title: 'SP Sita',
+  fieldName: 'sp_sita'
+}]
+
 class BarangBuktiCard extends React.PureComponent {
   render() {
     const { item } = this.props;
-    console.log('barangbukti', item)
     return (
         <View 
         style={{
@@ -31,6 +41,25 @@ class BarangBuktiCard extends React.PureComponent {
           <TouchableOpacity onPress={() => this.props.navigation.navigate('barangbukti.details', {
           	id: item.id
           })}>
+            {barangBuktiField.map(data => 
+              <View key={data.fieldName} style={{margin:5}}>
+                <Text 
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    justifyContent: 'center'
+                  }}>
+                  {data.title}
+                </Text>
+                <Text 
+                  style={{
+                    fontSize: 13,
+                    justifyContent: 'center'
+                  }}>
+                  {item[data.fieldName]}
+                </Text>
+              </View>
+            )}
             <View style={{margin:5}}>
               <Text 
                 style={{
@@ -45,7 +74,7 @@ class BarangBuktiCard extends React.PureComponent {
                   fontSize: 13,
                   justifyContent: 'center'
                 }}>
-                No LKN
+                {item.milik_tersangka_id.no_penangkapan_id.no_lkn.LKN}
               </Text>
             </View>
             <View style={{margin:5}}>
@@ -55,24 +84,14 @@ class BarangBuktiCard extends React.PureComponent {
                   fontWeight: 'bold',
                   justifyContent: 'center'
                 }}>
-                Nama Barang-Bukti
+                Nama Tersangka
               </Text>
               <Text 
                 style={{
                   fontSize: 13,
                   justifyContent: 'center'
                 }}>
-                Barang Bukti
-              </Text>
-            </View>
-            <View style={{position:'absolute', right:5, bottom:5}}>
-              <Text 
-                style={{
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                  justifyContent: 'center'
-                }}>
-                tanggal dibuat
+                {item.milik_tersangka_id.nama_tersangka}
               </Text>
             </View>
              <View style={{position:'absolute', right:5, top:5}}>

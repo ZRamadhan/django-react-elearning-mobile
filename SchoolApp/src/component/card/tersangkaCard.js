@@ -9,9 +9,24 @@ import {
 import { InputGroup, Icon, Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 
+const tersangkaField = [{
+  title: 'No Penangkapan',
+  fieldName: 'no_penangkapan_id'
+},{
+  title: 'Nama Tersangka',
+  fieldName: 'nama_tersangka'
+},{
+  title: 'Jenis Kelamin',
+  fieldName: 'jenis_kelamin'
+},{
+  title: 'Umur',
+  fieldName: 'umur'
+}]
+
 class TersangkaCard extends React.PureComponent {
   render() {
     const { item } = this.props;
+    console.log('item tersangka', item)
     return (
         <View 
         style={{
@@ -30,50 +45,25 @@ class TersangkaCard extends React.PureComponent {
           <TouchableOpacity onPress={() => this.props.navigation.navigate('tersangka.details', {
           	id: item.id
           })}>
-            <View style={{margin:5}}>
-              <Text 
-                style={{
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                  justifyContent: 'center'
-                }}>
-                No LKN
-              </Text>
-              <Text 
-                style={{
-                  fontSize: 13,
-                  justifyContent: 'center'
-                }}>
-                LKNKU
-              </Text>
-            </View>
-            <View style={{margin:5}}>
-              <Text 
-                style={{
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                  justifyContent: 'center'
-                }}>
-                Nama Tersangka
-              </Text>
-              <Text 
-                style={{
-                  fontSize: 13,
-                  justifyContent: 'center'
-                }}>
-                Tersangka
-              </Text>
-            </View>
-            <View style={{position:'absolute', right:5, bottom:5}}>
-              <Text 
-                style={{
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                  justifyContent: 'center'
-                }}>
-                Tanggal Dibuat
-              </Text>
-            </View>
+            {tersangkaField.map(data => 
+              <View key={data.fieldName} style={{margin:5}}>
+                <Text 
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    justifyContent: 'center'
+                  }}>
+                  {data.title}
+                </Text>
+                <Text 
+                  style={{
+                    fontSize: 13,
+                    justifyContent: 'center'
+                  }}>
+                  {item[data.fieldName]}
+                </Text>
+              </View>
+            )}
              <View style={{position:'absolute', right:5, top:5}}>
                 <Menu>
                   <MenuTrigger>

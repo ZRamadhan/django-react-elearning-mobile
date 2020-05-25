@@ -38,9 +38,9 @@ export default class TersangkaEdit extends React.Component {
       />
     )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar hideSearch disableMenu renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
-        <FormGroup title="Edit Tersangka" formData={formData}/>
+        <FormGroup title={`Edit Tersangka-${this.props.id}`} formData={formData}/>
         <Button
           title="Edit Tersangka"
           type="outline"

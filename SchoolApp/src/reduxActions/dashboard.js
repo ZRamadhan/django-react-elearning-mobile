@@ -341,7 +341,7 @@ export function get_lkn_mobile(page, data, token){
 
 export function get_tersangka_mobile(page, data, token){
   return async (dispatch, getState) => {
-    const result = await request(`/api/tsk-edit/?page=${page}`, {
+    const result = await request(`/mobile-api/tersangka/?page=${page}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -351,15 +351,13 @@ export function get_tersangka_mobile(page, data, token){
     if(result instanceof Error){
       return null
     }
-    console.log('page', page)
-    console.log('result', result.data)
-    return data.concat(result.data)
+    return data.concat(result.data.results)
   }
 }
 
 export function get_barangbukti_mobile(page, data, token){
   return async (dispatch, getState) => {
-    const result = await request(`/api/bb-edit/?page=${page}`, {
+    const result = await request(`/mobile-api/barangbukti/?page=${page}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -369,7 +367,6 @@ export function get_barangbukti_mobile(page, data, token){
     if(result instanceof Error){
       return null
     }
-    console.log('result barangbukti', result)
     return data.concat(result.data.results)
   }
 }
