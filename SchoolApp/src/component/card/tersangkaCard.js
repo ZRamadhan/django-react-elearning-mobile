@@ -8,6 +8,7 @@ import {
 } from 'react-native-popup-menu';
 import { InputGroup, Icon, Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
+import { get_token, request } from '../../helper/requestHelper';
 
 const tersangkaField = [{
   title: 'No Penangkapan',
@@ -24,9 +25,21 @@ const tersangkaField = [{
 }]
 
 class TersangkaCard extends React.PureComponent {
+
+  async onDelete(id) {
+    var token = await get_token();
+    return request(`/api/tsk-edit/${id}/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+  
   render() {
     const { item } = this.props;
-    console.log('item tersangka', item)
     return (
         <View 
         style={{
@@ -75,7 +88,7 @@ class TersangkaCard extends React.PureComponent {
                     })}>
                       <Text style={{color: 'gray', fontWeight: 'bold'}}>Edit</Text>
                     </MenuOption>
-                    <MenuOption onSelect={() => alert(`Delete`)} >
+                    <MenuOption onSelect={() => this.onDelete(item.id)} >
                       <Text style={{color: 'red', fontWeight: 'bold'}}>Delete</Text>
                     </MenuOption>
                   </MenuOptions>

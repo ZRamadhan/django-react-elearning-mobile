@@ -9,24 +9,12 @@ import {
 import { InputGroup, Icon, Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { deletelkn } from '../../reduxActions/dashboard';
-import axios from 'axios';
 import { get_token, request } from '../../helper/requestHelper';
-let baseUrl = 'http://178.128.80.233:8000';
 
 class LKNCard extends React.PureComponent {
   
   async onDelete(id) {
     var token = await get_token();
-    console.log('token',token)
-    console.log('item.id',id)
-    // var result = await axios.delete(`http://178.128.80.233:8000/api/lkn/${id}`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Authorization': `Bearer ${token}`
-    //   }
-    // })
-    // console.log('result',result)
     return request(`/api/lkn/${id}/`, {
       method: 'DELETE',
       headers: {
@@ -35,8 +23,8 @@ class LKNCard extends React.PureComponent {
       }
     })
       .then(response => console.log(response))
-    location.reload();
   }
+  
   render() {
     const { item } = this.props;
     return (

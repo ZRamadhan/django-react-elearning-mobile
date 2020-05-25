@@ -49,7 +49,6 @@ class TersangkaList extends React.Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  console.log(dashboard.tersangkaTableData)
   return {
     error: dashboard.error,
     lknTableData: dashboard.tersangkaTableData,

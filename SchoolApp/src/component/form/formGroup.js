@@ -32,12 +32,20 @@ export default class FormGroup extends Component {
           <DatePicker defaultValue={defaultDate} onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label}/>
         ) 
       } else if(data.type === 'select'){
+        var defaultInput = '';
+        if(this.props.defaultValue) {
+          defaultInput = this.props.defaultValue[data.fieldName]
+        }
         return (
-          <Picker key={data.label} placeholder={data.label} dropdown={data.dropdown}/>
+          <Picker defaultValue={defaultInput} onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label} dropdown={data.dropdown}/>
         )
       } else if(data.type === 'number'){
+        var defaultInput = '';
+        if(this.props.defaultValue) {
+          defaultInput = this.props.defaultValue[data.fieldName]
+        }
         return (
-          <Input key={data.label} placeholder={data.label} type='number'/>
+          <Input defaultValue={defaultInput} onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label} type='number'/>
         )
       } else if(data.type === 'time'){
         return (
