@@ -22,6 +22,12 @@ function receive_statusbb(data) {
   }
 }
 
+function receive_tersangka_data(data){
+  return {
+    type: "RECEIVE_TERSANGKA_DATA",
+    data
+  }
+}
 export function setSelectedLknId(id){
   return {
     type: "SET_SELECTED_LKN_ID",
@@ -493,7 +499,6 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
       url = `/api/tsk-edit/`
     }
 
-    console.log('pnkp', pnkp_id, token, url)
     return request(url, {
       method: 'GET',
       headers: {
@@ -502,9 +507,11 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
       }
     })
       .then((response) => {
-        console.log('responseku', response)
         if(response instanceof Error){
           return
+        }
+        if(id){
+          dispatch(receive_tersangka_data(response.data))
         }
         return response.data
       })

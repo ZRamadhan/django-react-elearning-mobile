@@ -2,12 +2,9 @@ import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Icon } from 'native-base';
-import { connect } from 'react-redux';
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
 import FormGroup from '../../component/form/formGroup';
-import { edittersangka, get_tersangka_list } from '../../reduxActions/dashboard';
-import { get_token } from '../../helper/requestHelper';
 
 function Separator() {
   return <View style={styles.separator} />;
@@ -21,58 +18,15 @@ const formData = [
   {label: 'Foto', name: 'foto', fieldName: 'foto', type: 'upload'}
 ]
 
-class TersangkaEdit extends React.Component {
+export default class TersangkaEdit extends React.Component {
   state = {
     loading: false,
-    isDataChange: false,
-    form: {}
   }
 
-  async componentDidMount(){
+  componentDidMount(){
     this.setState({loading:true})
     //do api call here
-    const token = await get_token()
-    await this.props.dispatch(get_tersangka_list(token, this.props.id))
-    this.setState({loading:false})
-  }
-
-  componentDidUpdate(prevProps){
-    if(this.props.tersangkaData !== prevProps.tersangkaData){
-      this.getDefaultForm()
-    }
-  }
-
-  onFormChange = (fieldName, e) => {
-    console.log(fieldName, e)
-    const formObj = {...this.state.form};
-    if(!e.target){
-      formObj[fieldName] = e
-      this.setState({
-          form: formObj,
-      })
-    } else {
-      formObj[fieldName] = e.target.value
-      this.setState({
-          form: formObj,
-      })
-    }
-  }
-
-  onSubmit = async() => {
-    this.setState({ isLoading: true })
-    const token = await get_token()
-    await this.props.dispatch(edittersangka(this.state.form, token, this.props.id))
-    if(!this.props.error){
-      this.props.navigation.navigate('tersangka.list')
-    } else {
-      console.log(this.props.error)
-      return;
-    }
-    this.setState({ isLoading: false })
-  }
-
-  getDefaultForm = () => {
-     this.setState({form: this.props.tersangkaData}, () => this.setState({ isDataChange: true}))
+    setTimeout(() => this.setState({loading:false}), 2000);
   }
 
   render(){
@@ -98,25 +52,19 @@ class TersangkaEdit extends React.Component {
     return (
       <NavigationBar hideSearch renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
-        <FormGroup title={`Edit Tersangka-${this.props.id}`} formData={formData} defaultValue={this.state.form} onFormChange={this.onFormChange}/>
+        <FormGroup title={`Edit Tersangka-${this.props.id}`} formData={formData}/>
         <Button
-          title="Simpan"
+          title="Edit Tersangka"
           type="outline"
           containerStyle={{padding:10}}
-          onPress={this.onSubmit}
+          onPress={() => {
+            this.props.navigation.navigate('tersangka.list')
+          }}
         />
         <Separator />
       </SafeAreaView>
       </NavigationBar>
     )
-  }
-}
-
-function mapStateToProps(state) {
-  const { dashboard } = state
-  return {
-    error: dashboard.error,
-    tersangkaData: dashboard.tersangkaData,
   }
 }
 
@@ -140,5 +88,3 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
-
-export default connect(mapStateToProps)(TersangkaEdit)
