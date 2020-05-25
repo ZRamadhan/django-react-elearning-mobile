@@ -14,7 +14,10 @@ const DatePicker = (props) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
-    props.onFormChange(props.fieldName, moment(currentDate).format("DD-MM-YYYY"))
+    defaultDate =moment(currentDate).format("DD-MM-YYYY");
+    if (currentDate) {
+      props.onFormChange(props.fieldName, moment(currentDate).format("DD-MM-YYYY"))
+    }
   };
 
   const showMode = currentMode => {
@@ -25,7 +28,16 @@ const DatePicker = (props) => {
   const showDatepicker = () => {
     showMode('date');
   };
+  
+  const toDate = (dateStr) => {
+    const [day, month, year] = dateStr.split("-")
+    return new Date(year, month - 1, day)
+  }
 
+  var defaultDate = date;
+  if (props.defaultValue) {
+    defaultDate = toDate(props.defaultValue);
+  }
 
   return (
     <View style={styles.container}>
@@ -33,7 +45,7 @@ const DatePicker = (props) => {
       <InputGroup>
         {show && (
           <DateTimePicker
-            value={date || new Date()}
+            value={ date || new Date()}
             mode={mode}
             display="default"
             onChange={onChange}
@@ -41,7 +53,7 @@ const DatePicker = (props) => {
         )}
         <Icon name='calendar' style={{fontSize:16}}/>
         <TouchableOpacity onPress={showDatepicker}>
-          <Text style={{padding:5, fontSize:15, color:'gray'}}>{date ? moment(date).format("DD/MM/YYYY") : "Atur Tanggal"}</Text>
+          <Text style={{padding:5, fontSize:15, color:'gray'}}>{defaultDate ? moment(defaultDate).format("DD/MM/YYYY") : "Atur Tanggal"}</Text>
         </TouchableOpacity>
       </InputGroup>
     </View>
