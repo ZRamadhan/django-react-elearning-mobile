@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactNative, { ScrollView, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import ReactNative, { ScrollView, TouchableWithoutFeedback, TouchableOpacity, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 import { InputGroup, Text, Icon } from 'native-base';
 import DatePicker from '../component/datePicker.android';
@@ -69,15 +69,18 @@ class NavigationBar extends Component {
   render() {
     const hideNavbar = this.props.hideNavbar ? true : this.state.hideContent
     return (
+      <ImageBackground source={require('../assets/background_mobile.png')} style={{flex: 1, resizedMode: 'cover', justifyContent: 'center'}}>
       <View style={styles.container}>
           {(!hideNavbar) && (
             <View style={{
+              flex: 0.1,
               height: 60,
-              backgroundColor: 'white',
               flexDirection: "row",
-              justifyContent: 'space-around',
               alignItems: 'center',
               marginBottom: 15,
+              justifyContent: 'space-between',
+              paddingLeft: 10,
+              paddingRight: 10
             }}>
               <Button
                   icon={
@@ -94,21 +97,21 @@ class NavigationBar extends Component {
                   type="outline"
                 />
                 <Button
-                  title={this.props.home ? "Logout" : "Back"}
-                  buttonStyle={styles.buttonDisabled}
-                  type="clear"
-                  onPress={this.props.home 
-                    ? () => this.props.navigation.navigate('login') 
-                    : () => this.props.navigation.pop()}
-                />
-                <Button
                   title="Notification"
                   icon={
                     <Icon style={{fontSize:14, color:'#517fa4', padding:5}} name='ios-cloud'/>
                   }
                   raised
                   containerStyle={styles.button}
-                  type="outline"
+                  type="clear"
+                />
+                <Button
+                  title={this.props.home ? "Logout" : "Back"}
+                  buttonStyle={{padding: 8, color: 'red'}}
+                  type="clear"
+                  onPress={this.props.home 
+                    ? () => this.props.navigation.navigate('login') 
+                    : () => this.props.navigation.pop()}
                 />
             </View>
           )}
@@ -196,7 +199,9 @@ class NavigationBar extends Component {
               </TouchableWithoutFeedback>
             )}
            </ContentLoader>
+           
       </View>
+      </ImageBackground>
     );
   }
 }
@@ -204,11 +209,10 @@ class NavigationBar extends Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
     marginTop: 35
   },
   button: {
-    padding: 8,
+    // padding: 8,
   },
   buttonText: {
     fontSize: 17,
