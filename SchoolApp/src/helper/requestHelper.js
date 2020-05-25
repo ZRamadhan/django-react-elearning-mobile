@@ -63,6 +63,6 @@ export async function request(path, options, body) {
     const result = await requestObject
     return result;
   } catch (e) {
-    return e;
+      return e;
   }
 }

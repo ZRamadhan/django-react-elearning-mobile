@@ -10,8 +10,23 @@ import { connect } from 'react-redux';
 import { setSelectedLknId } from '../../reduxActions/dashboard';
 import { InputGroup, Icon, Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
+import { deletelkn } from '../../reduxActions/dashboard';
+import { get_token, request } from '../../helper/requestHelper';
 
 class LKNCard extends React.PureComponent {
+  
+  async onDelete(id) {
+    var token = await get_token();
+    return request(`/api/lkn/${id}/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+  
   render() {
     const { item } = this.props;
     return (
@@ -95,7 +110,7 @@ class LKNCard extends React.PureComponent {
                     }>
                       <Text style={{color: 'gray', fontWeight: 'bold'}}>Edit</Text>
                     </MenuOption>
-                    <MenuOption onSelect={() => alert(`Delete`)} >
+                    <MenuOption onSelect={() => this.onDelete(item.id)} >
                       <Text style={{color: 'red', fontWeight: 'bold'}}>Delete</Text>
                     </MenuOption>
                   </MenuOptions>

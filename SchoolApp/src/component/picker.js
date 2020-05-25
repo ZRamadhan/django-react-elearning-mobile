@@ -8,11 +8,17 @@ export default class PickerInputExample extends Component {
     this.state = {
       selected2: undefined
     };
+    if(props.defaultValue){
+      this.state = {
+        selected2: props.defaultValue
+      };
+    }
   }
   onValueChange2(value) {
     this.setState({
       selected2: value
     });
+    this.props.onFormChange(this.props.fieldName, value)
   }
   render() {
     return (
@@ -32,7 +38,7 @@ export default class PickerInputExample extends Component {
                     selectedValue={this.state.selected2}
                     onValueChange={this.onValueChange2.bind(this)}
                     >
-                      <Picker.Item label={this.props.placeholder} value={this.props.placeholder} />
+                      {/* <Picker.Item label={this.props.defaultValue} value={this.props.defaultValue} /> */}
                       {this.props.dropdown.map(data =>
                         <Picker.Item key={data.value} label={data.name} value={data.value} />    
                       )}

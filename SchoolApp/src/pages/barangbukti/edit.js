@@ -1,24 +1,69 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
+import { connect } from 'react-redux';
 import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
 import FormGroup from '../../component/form/formGroup';
 import NavigationBar from '../../component/navigationBar';
+import { editbb, get_bb_list } from '../../reduxActions/dashboard';
+import { get_token } from '../../helper/requestHelper';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
 
-export default class BarangBuktiEdit extends React.Component {
+class BarangBuktiEdit extends React.Component {
   state = {
-    form: {},
     loading: false,
+    isDataChange: false,
+    form: {}
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     this.setState({loading:true})
     //do api call here
-    setTimeout(() => this.setState({loading:false}), 2000);
+    const token = await get_token()
+    await this.props.dispatch(get_bb_list(token, this.props.id))
+    this.setState({loading:false})
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.props.bbData !== prevProps.bbData){
+      this.getDefaultForm()
+    }
+  }
+
+  onFormChange = (fieldName, e) => {
+    console.log(fieldName, e)
+    const formObj = {...this.state.form};
+    if(!e.target){
+      formObj[fieldName] = e
+      this.setState({
+          form: formObj,
+      })
+    } else {
+      formObj[fieldName] = e.target.value
+      this.setState({
+          form: formObj,
+      })
+    }
+  }
+
+  onSubmit = async() => {
+    this.setState({ isLoading: true })
+    const token = await get_token()
+    await this.props.dispatch(editbb(this.state.form, token, this.props.id))
+    if(!this.props.error){
+      this.props.navigation.navigate('barangbukti.list')
+    } else {
+      console.log(this.props.error)
+      return;
+    }
+    this.setState({ isLoading: false })
+  }
+
+  getDefaultForm = () => {
+     this.setState({form: this.props.bbData}, () => this.setState({ isDataChange: true}))
   }
 
   render(){
@@ -52,18 +97,24 @@ export default class BarangBuktiEdit extends React.Component {
     return (
       <NavigationBar hideSearch renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
-        <FormGroup title="Edit Barang Bukti" formData={formData}/>
+        <FormGroup title="Edit Barang Bukti" formData={formData} defaultValue={this.state.form} onFormChange={this.onFormChange}/>
         <Button
-          title={`Edit Barang Bukti-${this.props.id}`}
+          title={`Simpan`}
           type="outline"
           containerStyle={{padding:10}}
-          onPress={() => {
-            this.props.navigation.navigate('penangkapan.edit')
-          }}
+          onPress={this.onSubmit}
         />
         </SafeAreaView>
       </NavigationBar>
     )
+  }
+}
+
+function mapStateToProps(state) {
+  const { dashboard } = state
+  return {
+    error: dashboard.error,
+    bbData: dashboard.bbData,
   }
 }
 
@@ -87,3 +138,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
+
+export default connect(mapStateToProps)(BarangBuktiEdit)

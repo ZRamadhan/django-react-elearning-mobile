@@ -44,6 +44,10 @@ class LKNLIST extends React.Component {
     setTimeout(() => this.setState({loading:false}), 2000);
   }
 
+  async onDelete(){
+    alert('delete');
+  }
+
   render(){
     //refer navigation path in component navigator , buttonGroup is button that will be render in bottom animation menu
     const buttonGroup = (
@@ -75,7 +79,7 @@ class LKNLIST extends React.Component {
     return (
       <NavigationBar isHome renderButton={buttonGroup} loading={this.state.loading} home>
         <SafeAreaView style={styles.container}>
-          <RefreshableList page='LKN'/>
+          <RefreshableList page='LKN' onDelete={this.onDelete}/>
         </SafeAreaView>
       </NavigationBar>
     )

@@ -530,10 +530,10 @@ export function login(){
 
 export function edittersangka(data, token, id) {
   return dispatch => {
-    return request(`/api/tsk-edit/${id}/`, {
+      return request(`/api/tsk-edit/${id}/`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     },data)
@@ -551,7 +551,6 @@ export function edittersangka(data, token, id) {
 
 export function edittersangkafoto(data, token, id) {
   return dispatch => {
-    console.log('reducer', data)
     return request(`/api/tsk-edit/${id}/`, {
       method: 'PUT',
       headers: {

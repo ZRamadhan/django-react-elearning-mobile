@@ -11,8 +11,12 @@ export default class FormGroup extends Component {
    render(){
     const FormList = (this.props.formData || []).map((data) => {
       if(data.type === 'input' || data.type === null || data.type === undefined){
+        var defaultInput = '';
+        if(this.props.defaultValue) {
+          defaultInput = this.props.defaultValue[data.fieldName]
+        }
         return (
-          <Input onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label}/>
+          <Input defaultValue={defaultInput} onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label}/>
         )
       } else if(data.type === 'password'){
         return (
@@ -20,16 +24,28 @@ export default class FormGroup extends Component {
         )
       }
       else if(data.type === 'date'){
+        var defaultDate = '';
+        if(this.props.defaultValue) {
+          defaultDate = this.props.defaultValue[data.fieldName]
+        }
         return (
-          <DatePicker onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label}/>
+          <DatePicker defaultValue={defaultDate} onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label}/>
         ) 
       } else if(data.type === 'select'){
+        var defaultInput = '';
+        if(this.props.defaultValue) {
+          defaultInput = this.props.defaultValue[data.fieldName]
+        }
         return (
-          <Picker key={data.label} placeholder={data.label} dropdown={data.dropdown}/>
+          <Picker defaultValue={defaultInput} onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label} dropdown={data.dropdown}/>
         )
       } else if(data.type === 'number'){
+        var defaultInput = '';
+        if(this.props.defaultValue) {
+          defaultInput = this.props.defaultValue[data.fieldName]
+        }
         return (
-          <Input key={data.label} placeholder={data.label} type='number'/>
+          <Input defaultValue={defaultInput} onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label} type='number'/>
         )
       } else if(data.type === 'time'){
         return (
