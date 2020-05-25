@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
-import { Button } from 'react-native-elements'
+import { Button } from 'react-native-elements';
+import { Icon } from 'native-base';
+import { connect } from 'react-redux';
 import Constants from 'expo-constants';
 import FormGroup from '../../component/form/formGroup';
 import NavigationBar from '../../component/navigationBar';
@@ -15,7 +17,7 @@ const formData = [
   {label: 'MASA BERAKHIR PENANGKAPAN', name: 'Masa Berakhir Penangkapan', fieldName: 'masa_berakhir_penangkapan', type: 'date'},
 ]
 
-export default class PenangkapanEdit extends React.Component {
+class PenangkapanEdit extends React.Component {
   state = {
     loading: false,
   }
@@ -31,21 +33,29 @@ export default class PenangkapanEdit extends React.Component {
     const buttonGroup = (
       <React.Fragment>
         <Button
-          title="LIST TERSANGKA"
+          icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='list' />}
+          title="List Tersangka"
           type="outline"
           containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('tersangka.list')}
+          onPress={()=>this.props.navigation.navigate('tersangka.list', {
+            pnkpId: this.props.selectedPnkpId,
+            page: 'PenangkapanEdit'
+          })}
         />
         <Button
-          title="LIST BARANG BUKTI"
+          icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='list' />}
+          title="List Barang-Bukti"
           type="outline"
           containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('barangbukti.list')}
+          onPress={()=>this.props.navigation.navigate('barangbukti.list', {
+            pnkpId: this.props.selectedPnkpId,
+            page: 'PenangkapanEdit'
+          })}
         />
       </React.Fragment>
     )
     return (
-      <NavigationBar hideSearch disableMenu renderButton={buttonGroup} loading={this.state.loading} hideFilter>
+      <NavigationBar hideSearch renderButton={buttonGroup} loading={this.state.loading} hideFilter>
         <SafeAreaView style={styles.container}>
         <FormGroup title="Edit Penangkapan" formData={formData}></FormGroup>
         <Button
@@ -83,3 +93,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
+
+function mapStateToProps(state) {
+  const { dashboard } = state
+  return {
+    selectedPnkpId: dashboard.selectedPnkpId,
+  }
+}
+
+export default connect(mapStateToProps)(PenangkapanEdit)

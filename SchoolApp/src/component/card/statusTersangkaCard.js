@@ -6,12 +6,10 @@ import {
   MenuOption,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import { connect } from 'react-redux';
-import { setSelectedLknId } from '../../reduxActions/dashboard';
 import { InputGroup, Icon, Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 
-class LKNCard extends React.PureComponent {
+class StatusTersangka extends React.PureComponent {
   render() {
     const { item } = this.props;
     return (
@@ -29,13 +27,9 @@ class LKNCard extends React.PureComponent {
           elevation: 2,
           margin: 10,
         }}>
-          <TouchableOpacity onPress={() => {
-            this.props.navigation.navigate('lkn.details', {
-          	 id: item.id
-            })
-            this.props.dispatch(setSelectedLknId(item.id))
-           }
-          }>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('statusTSK.details', {
+          	id: item.id
+          })}>
             <View style={{margin:5}}>
               <Text 
                 style={{
@@ -50,7 +44,7 @@ class LKNCard extends React.PureComponent {
                   fontSize: 13,
                   justifyContent: 'center'
                 }}>
-                {item.LKN}
+                'Status TERSANGKA'
               </Text>
             </View>
             <View style={{margin:5}}>
@@ -60,14 +54,14 @@ class LKNCard extends React.PureComponent {
                   fontWeight: 'bold',
                   justifyContent: 'center'
                 }}>
-                Nama Penyidik
+                Nama TERSANGKA
               </Text>
               <Text 
                 style={{
                   fontSize: 13,
                   justifyContent: 'center'
                 }}>
-                {`${item.penyidik.nama_depan || ''} ${item.penyidik.nama_belakang || ''}`}
+                'STATUS TERSANGKA'
               </Text>
             </View>
             <View style={{position:'absolute', right:5, bottom:5}}>
@@ -77,7 +71,7 @@ class LKNCard extends React.PureComponent {
                   fontWeight: 'bold',
                   justifyContent: 'center'
                 }}>
-                {item.tgl_dibuat}
+                'STATUS TERSANGKA'
               </Text>
             </View>
              <View style={{position:'absolute', right:5, top:5}}>
@@ -86,13 +80,9 @@ class LKNCard extends React.PureComponent {
                     <Icon style={{fontSize:20, color:'#517fa4', padding:5}} name='ios-menu' />
                   </MenuTrigger>
                   <MenuOptions style={{backgroundColor: '#F5FCFF'}}>
-                    <MenuOption onSelect={() => {
-                      this.props.navigation.navigate('lkn.edit', {
-                        id: item.id
-                      });
-                      this.props.dispatch(setSelectedLknId(item.id));
-                     }
-                    }>
+                    <MenuOption onSelect={() => this.props.navigation.navigate('statusTSK.edit', {
+                      id: item.id
+                    })}>
                       <Text style={{color: 'gray', fontWeight: 'bold'}}>Edit</Text>
                     </MenuOption>
                     <MenuOption onSelect={() => alert(`Delete`)} >
@@ -107,4 +97,4 @@ class LKNCard extends React.PureComponent {
   }
 }
 
-export default connect()(withNavigation(LKNCard));
+export default withNavigation(StatusTersangka);

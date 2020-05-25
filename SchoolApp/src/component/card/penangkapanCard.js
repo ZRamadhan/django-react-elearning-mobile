@@ -7,11 +7,11 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import { connect } from 'react-redux';
-import { setSelectedLknId } from '../../reduxActions/dashboard';
+import { setSelectedPnkpId } from '../../reduxActions/dashboard';
 import { InputGroup, Icon, Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 
-class LKNCard extends React.PureComponent {
+class PenangkapanCard extends React.PureComponent {
   render() {
     const { item } = this.props;
     return (
@@ -30,10 +30,10 @@ class LKNCard extends React.PureComponent {
           margin: 10,
         }}>
           <TouchableOpacity onPress={() => {
-            this.props.navigation.navigate('lkn.details', {
+            this.props.navigation.navigate('penangkapan.details', {
           	 id: item.id
             })
-            this.props.dispatch(setSelectedLknId(item.id))
+            this.props.dispatch(setSelectedPnkpId(item.id))
            }
           }>
             <View style={{margin:5}}>
@@ -43,14 +43,14 @@ class LKNCard extends React.PureComponent {
                   fontWeight: 'bold',
                   justifyContent: 'center'
                 }}>
-                No LKN
+                No.LKN
               </Text>
               <Text 
                 style={{
                   fontSize: 13,
                   justifyContent: 'center'
                 }}>
-                {item.LKN}
+                {item.no_lkn}
               </Text>
             </View>
             <View style={{margin:5}}>
@@ -60,24 +60,48 @@ class LKNCard extends React.PureComponent {
                   fontWeight: 'bold',
                   justifyContent: 'center'
                 }}>
-                Nama Penyidik
+                SP KAP
               </Text>
               <Text 
                 style={{
                   fontSize: 13,
                   justifyContent: 'center'
                 }}>
-                {`${item.penyidik.nama_depan || ''} ${item.penyidik.nama_belakang || ''}`}
+                {item.no_penangkapan}
               </Text>
             </View>
-            <View style={{position:'absolute', right:5, bottom:5}}>
+            <View style={{margin:5}}>
               <Text 
                 style={{
                   fontSize: 16,
                   fontWeight: 'bold',
                   justifyContent: 'center'
                 }}>
-                {item.tgl_dibuat}
+                Tanggal Penangkapan
+              </Text>
+              <Text 
+                style={{
+                  fontSize: 13,
+                  justifyContent: 'center'
+                }}>
+                {item.tanggal_penangkapan}
+              </Text>
+            </View>
+            <View style={{margin:5}}>
+              <Text 
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  justifyContent: 'center'
+                }}>
+                Masa Berakhir Penangkapan
+              </Text>
+              <Text 
+                style={{
+                  fontSize: 13,
+                  justifyContent: 'center'
+                }}>
+                {item.masa_berakhir_penangkapan}
               </Text>
             </View>
              <View style={{position:'absolute', right:5, top:5}}>
@@ -87,10 +111,10 @@ class LKNCard extends React.PureComponent {
                   </MenuTrigger>
                   <MenuOptions style={{backgroundColor: '#F5FCFF'}}>
                     <MenuOption onSelect={() => {
-                      this.props.navigation.navigate('lkn.edit', {
+                      this.props.navigation.navigate('penangkapan.edit', {
                         id: item.id
-                      });
-                      this.props.dispatch(setSelectedLknId(item.id));
+                      })
+                      this.props.dispatch(setSelectedPnkpId(item.id))
                      }
                     }>
                       <Text style={{color: 'gray', fontWeight: 'bold'}}>Edit</Text>
@@ -107,4 +131,4 @@ class LKNCard extends React.PureComponent {
   }
 }
 
-export default connect()(withNavigation(LKNCard));
+export default connect()(withNavigation(PenangkapanCard));

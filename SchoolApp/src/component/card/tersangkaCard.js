@@ -10,9 +10,6 @@ import { InputGroup, Icon, Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 
 const tersangkaField = [{
-  title: 'No Penangkapan',
-  fieldName: 'no_penangkapan_id'
-},{
   title: 'Nama Tersangka',
   fieldName: 'nama_tersangka'
 },{
@@ -64,6 +61,23 @@ class TersangkaCard extends React.PureComponent {
                 </Text>
               </View>
             )}
+              <View style={{margin:5}}>
+                <Text 
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    justifyContent: 'center'
+                  }}>
+                  No.Penangkapan
+                </Text>
+                <Text 
+                  style={{
+                    fontSize: 13,
+                    justifyContent: 'center'
+                  }}>
+                  {item.no_penangkapan_id.id || item.no_penangkapan_id}
+                </Text>
+              </View>
              <View style={{position:'absolute', right:5, top:5}}>
                 <Menu>
                   <MenuTrigger>

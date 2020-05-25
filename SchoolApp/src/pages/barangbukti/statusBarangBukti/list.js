@@ -3,36 +3,16 @@ import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements'
 import { Icon } from 'native-base';
-import { get_token } from '../../helper/requestHelper';
+import { get_token } from '../../../helper/requestHelper';
 import Constants from 'expo-constants';
-import RefreshableList from '../../component/refreshableList';
-import NavigationBar from '../../component/navigationBar';
+import RefreshableList from '../../../component/refreshableList';
+import NavigationBar from '../../../component/navigationBar';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
 
-const cardField = [
-  {
-    title: 'No.LKN',
-    dataIndex: 'LKN',
-    sorter: true,
-    search: true,
-  },
-  {
-    title: 'Nama Penyidik',
-    dataIndex: 'nama_penyidik',
-    sorter: true,
-    search: true,
-  },
-  {
-    title: 'Dibuat Pada',
-    dataIndex: 'tgl_dibuat',
-    sorter: true,
-  }
-]
-
-class LKNLIST extends React.Component {
+class StatusBarangBuktiList extends React.Component {
   state = {
     loading: false,
   }
@@ -49,33 +29,19 @@ class LKNLIST extends React.Component {
     const buttonGroup = (
       <React.Fragment>
         <Button
-          title="Buat LKN"
+          title="Buat Status Barang Bukti"
           type="outline"
           icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='create' />}
           containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('lkn.new')}
-        />
-        <Button
-          title="List Tersangka"
-          type="outline"
-          icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='list' />}
-          containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('tersangka.list')}
-        />
-        <Button
-          title="List Barang-Bukti"
-          type="outline"
-          icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='list' />}
-          containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('barangbukti.list')}
+          onPress={()=>this.props.navigation.navigate('statusBB.new')}
         />
       </React.Fragment>
     )
 
     return (
-      <NavigationBar isHome renderButton={buttonGroup} loading={this.state.loading} home>
+      <NavigationBar hideSearch renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
-          <RefreshableList page='LKN'/>
+          <Text>Ini Status Barang Bukti List</Text>
         </SafeAreaView>
       </NavigationBar>
     )
@@ -111,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(LKNLIST)
+export default connect(mapStateToProps)(StatusBarangBuktiList)
