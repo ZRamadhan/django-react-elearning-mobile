@@ -8,6 +8,7 @@ import {
 } from 'react-native-popup-menu';
 import { InputGroup, Icon, Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
+import { get_token, request } from '../../helper/requestHelper';
 
 const barangBuktiField = [{
   title: 'Jenis Barang',
@@ -21,6 +22,19 @@ const barangBuktiField = [{
 }]
 
 class BarangBuktiCard extends React.PureComponent {
+  
+  async onDelete(id) {
+    var token = await get_token();
+    return request(`/api/bb-edit/${id}/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+  
   render() {
     const { item } = this.props;
     return (
@@ -105,7 +119,7 @@ class BarangBuktiCard extends React.PureComponent {
                     })}>
                       <Text style={{color: 'gray', fontWeight: 'bold'}}>Edit</Text>
                     </MenuOption>
-                    <MenuOption onSelect={() => alert(`Delete`)} >
+                    <MenuOption onSelect={() => this.onDelete(item.id)} >
                       <Text style={{color: 'red', fontWeight: 'bold'}}>Delete</Text>
                     </MenuOption>
                   </MenuOptions>

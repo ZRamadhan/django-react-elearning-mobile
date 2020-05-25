@@ -23,6 +23,8 @@ const formData = [
 class TersangkaEdit extends React.Component {
   state = {
     loading: false,
+    isDataChange: false,
+    form: {}
   }
 
   async componentDidMount(){
