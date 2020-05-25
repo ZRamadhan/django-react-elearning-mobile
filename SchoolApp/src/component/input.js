@@ -4,7 +4,6 @@ import { StyleSheet, View, Text } from 'react-native';
 
 export default class Inputs extends Component {
     render() {
-        console.log('default valueku', this.props.defaultValue)
         let input = <Input onChangeText={(text) => {this.props.onFormChange(this.props.fieldName, text)}} style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder} value={this.props.defaultValue}/>
         if(this.props.type === 'number'){
           input = <Input onChangeText={(text) => {this.props.onFormChange(this.props.fieldName, text)}} style={{ padding:15, fontSize: 14, color: 'grey' }} placeholder={this.props.placeholder} value={this.props.defaultValue && this.props.defaultValue.toString()} type='number' keyboardType = 'numeric'/>

@@ -365,7 +365,7 @@ export function post_lkn_by_penyidik(token, data) {
 export function get_lkn_by_no_lkn(token, id) {
   return async dispatch => {
     try {
-      const result = await request(`/api/lkn/${id}`, {
+      const result = await request(`/api/lkn/${id}/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -450,7 +450,7 @@ export function getpenangkapan(token, id = null, LKN = null) {
 
 export function deletepenangkapan(token, id) {
   return dispatch => {
-    return request(`/api/pnkp/${id}`, {
+    return request(`/api/pnkp/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

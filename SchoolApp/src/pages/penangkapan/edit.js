@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import Constants from 'expo-constants';
 import FormGroup from '../../component/form/formGroup';
 import NavigationBar from '../../component/navigationBar';
+import { editpenangkapan, getpenangkapan } from '../../reduxActions/dashboard';
+import { get_token } from '../../helper/requestHelper';
 
 function Separator() {
   return <View style={styles.separator} />;
@@ -20,12 +22,46 @@ const formData = [
 class PenangkapanEdit extends React.Component {
   state = {
     loading: false,
+    isDataChange: false,
+    form: {}
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     this.setState({loading:true})
     //do api call here
-    setTimeout(() => this.setState({loading:false}), 2000);
+    const token = await get_token()
+    var result = await this.props.dispatch(getpenangkapan(token, this.props.selectedPnkpId))
+    this.setState({form:result})
+    this.setState({loading:false})
+  }
+
+  onFormChange = (fieldName, e) => {
+    console.log(fieldName, e)
+    const formObj = {...this.state.form};
+    if(!e.target){
+      formObj[fieldName] = e
+      this.setState({
+          form: formObj,
+      })
+    } else {
+      formObj[fieldName] = e.target.value
+      this.setState({
+          form: formObj,
+      })
+    }
+  }
+
+  onSubmit = async() => {
+    this.setState({ isLoading: true })
+    const token = await get_token()
+    await this.props.dispatch(editpenangkapan(token, this.state.form, this.props.id))
+    if(!this.props.error){
+      this.props.navigation.navigate('penangkapan.list')
+    } else {
+      console.log(this.props.error)
+      return;
+    }
+    this.setState({ isLoading: false })
   }
 
   render(){
@@ -57,14 +93,12 @@ class PenangkapanEdit extends React.Component {
     return (
       <NavigationBar hideSearch renderButton={buttonGroup} loading={this.state.loading} hideFilter>
         <SafeAreaView style={styles.container}>
-        <FormGroup title="Edit Penangkapan" formData={formData}></FormGroup>
+        <FormGroup title="Edit Penangkapan" formData={formData} defaultValue={this.state.form} onFormChange={this.onFormChange}></FormGroup>
         <Button
           title="Edit Penangkapan"
           type="outline"
           containerStyle={{padding:10}}
-          onPress={() => {
-            this.props.navigation.pop()
-          }}
+          onPress={this.onSubmit}
         />
         <Separator />
       </SafeAreaView>

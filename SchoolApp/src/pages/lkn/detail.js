@@ -1,27 +1,32 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
+import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 import { Icon } from 'native-base';
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
+import { get_lkn_detail } from '../../reduxActions/dashboard';
+import { get_token } from '../../helper/requestHelper';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
 
-export default class LKNDetail extends React.Component {
+class LKNDetail extends React.Component {
   state = {
     loading: false,
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     this.setState({loading:true})
     //do api call here
-    setTimeout(() => this.setState({loading:false}), 2000);
+    const token = await get_token()
+    await this.props.dispatch(get_lkn_detail(token, this.props.id))
+    this.setState({loading:false})
   }
 
-
   render(){
+    console.log(this.props.lknData)
     //refer navigation path in component navigator , buttonGroup is button that will be render in bottom animation menu
     const buttonGroup = (
       <Button
@@ -29,7 +34,7 @@ export default class LKNDetail extends React.Component {
         type="outline"
         icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='list' />}
         containerStyle={{padding:10}}
-        onPress={()=>this.props.navigation.navigate('penangkapan.list')}
+        onPress={()=>this.props.navigation.navigate('penangkapan.list', {lknId: this.props.id})}
        />
     )
     return (
@@ -65,3 +70,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
+
+
+function mapStateToProps(state) {
+  const { dashboard } = state
+  return {
+    lknData: dashboard.lknData,
+  }
+}
+
+export default connect(mapStateToProps)(LKNDetail)
