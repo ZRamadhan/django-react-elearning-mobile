@@ -8,6 +8,8 @@ const initialState = {
   prosesTersangkaData: [],
   error: false,
   lknData: [],
+  selectedPnkpId: null,
+  selectedLknId: null,
   bbStatus: [],
   statusBBData: [],
   lknCreated: false,
@@ -30,6 +32,16 @@ const dashboard = (state = initialState, action) => {
         ...state,
         lknTableData: action.data,
       };
+    case 'SET_SELECTED_LKN_ID':
+      return {
+        ...state,
+        selectedLknId: action.id,
+      }
+    case 'SET_SELECTED_PNKP_ID':
+      return {
+        ...state,
+        selectedPnkpId: action.id,
+      }
     case 'RESET_LKN_TABLE':
       return {
         ...state,

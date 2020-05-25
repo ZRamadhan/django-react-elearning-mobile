@@ -9,6 +9,18 @@ import SearchBar from './searchBar';
 import PenangkapanList from '../pages/penangkapan/list';
 import PenangkapanEdit from '../pages/penangkapan/edit';
 import PenangkapanNew from '../pages/penangkapan/new';
+import ProsesTersangkaView from '../pages/tersangka/prosesTersangka/detail';
+import ProsesTersangkaList from '../pages/tersangka/prosesTersangka/list';
+import ProsesTersangkaEdit from '../pages/tersangka/prosesTersangka/edit';
+import ProsesTersangkaNew from '../pages/tersangka/prosesTersangka/new';
+import StatusTersangkaView from '../pages/tersangka/statusTersangka/detail';
+import StatusTersangkaList from '../pages/tersangka/statusTersangka/list';
+import StatusTersangkaEdit from '../pages/tersangka/statusTersangka/edit';
+import StatusTersangkaNew from '../pages/tersangka/statusTersangka/new';
+import StatusBBView from '../pages/barangbukti/statusBarangBukti/detail';
+import StatusBBList from '../pages/barangbukti/statusBarangBukti/list';
+import StatusBBEdit from '../pages/barangbukti/statusBarangBukti/edit';
+import StatusBBNew from '../pages/barangbukti/statusBarangBukti/new';
 import PenangkapanView from '../pages/penangkapan/detail';
 import TersangkaNew from '../pages/tersangka/new';
 import BarangBuktiNew from '../pages/barangbukti/new';
@@ -55,10 +67,22 @@ const LKNNavigator = createStackNavigator({
   'tersangka.list': { screen: mapNavigationStateParamsToProps(TersangkaList) },
   'tersangka.edit': { screen: mapNavigationStateParamsToProps(TersangkaEdit) },
   'tersangka.new': { screen: mapNavigationStateParamsToProps(TersangkaNew) },
+  'statusTSK.details': { screen: mapNavigationStateParamsToProps(StatusTersangkaView) },
+  'statusTSK.list': { screen: mapNavigationStateParamsToProps(StatusTersangkaList) },
+  'statusTSK.edit': { screen: mapNavigationStateParamsToProps(StatusTersangkaEdit) },
+  'statusTSK.new': { screen: mapNavigationStateParamsToProps(StatusTersangkaNew) },
+  'prosesTSK.details': { screen: mapNavigationStateParamsToProps(ProsesTersangkaView) },
+  'prosesTSK.list': { screen: mapNavigationStateParamsToProps(ProsesTersangkaList) },
+  'prosesTSK.edit': { screen: mapNavigationStateParamsToProps(ProsesTersangkaEdit) },
+  'prosesTSK.new': { screen: mapNavigationStateParamsToProps(ProsesTersangkaNew) },
   'barangbukti.list': { screen: mapNavigationStateParamsToProps(BarangBuktiList) },
   'barangbukti.details': { screen: mapNavigationStateParamsToProps(BarangBuktiView) },
   'barangbukti.edit': { screen: mapNavigationStateParamsToProps(BarangBuktiEdit) },
   'barangbukti.new': { screen: mapNavigationStateParamsToProps(BarangBuktiNew) },
+  'statusBB.details': { screen: mapNavigationStateParamsToProps(StatusBBView) },
+  'statusBB.list': { screen: mapNavigationStateParamsToProps(StatusBBList) },
+  'statusBB.edit': { screen: mapNavigationStateParamsToProps(StatusBBEdit) },
+  'statusBB.new': { screen: mapNavigationStateParamsToProps(StatusBBNew) },
 }, {
   headerMode: 'none',
 });

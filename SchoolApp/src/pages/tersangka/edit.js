@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
+import { Button } from 'react-native-elements';
+import { Icon } from 'native-base';
 import { connect } from 'react-redux';
-import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
 import FormGroup from '../../component/form/formGroup';
@@ -77,14 +78,25 @@ class TersangkaEdit extends React.Component {
   render(){
     //refer navigation path in component navigator , buttonGroup is button that will be render in bottom animation menu
     const buttonGroup = (
-      <Button
-        title="Solid Button"
-        type="outline"
-        containerStyle={{padding:10}}
-      />
+      <React.Fragment>
+        <Button
+          title="List Status Tersangka"
+          type="outline"
+          icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='list' />}
+          containerStyle={{padding:10}}
+          onPress={()=>this.props.navigation.navigate('statusTSK.list')}
+        />
+        <Button
+          title="List Proses Tersangka"
+          type="outline"
+          icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='list' />}
+          containerStyle={{padding:10}}
+          onPress={()=>this.props.navigation.navigate('prosesTSK.list')}
+        />
+      </React.Fragment>
     )
     return (
-      <NavigationBar hideSearch disableMenu renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar hideSearch renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
         <FormGroup title={`Edit Tersangka-${this.props.id}`} formData={formData} defaultValue={this.state.form} onFormChange={this.onFormChange}/>
         <Button

@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
+import { Icon } from 'native-base';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
@@ -24,25 +25,36 @@ class TersangkaList extends React.Component {
     const buttonGroup = (
       <React.Fragment>
          <Button
-          title="BUAT TERSANGKA"
+          title="Buat Tersangka"
+          icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='create' />}
           type="outline"
           containerStyle={{padding:10}}
           onPress={()=>this.props.navigation.navigate('tersangka.new')}
         />
-        <Button
-          title="EDIT TERSANGKA"
-          type="outline"
-          containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('tersangka.edit')}
-        />
       </React.Fragment>
     )
+    if(this.props.pnkpId){
+      return (
+        this.props.page === 'PenangkapanDetail' ? 
+          <NavigationBar disableMenu hideSearch renderButton={buttonGroup} loading={this.state.loading}>
+            <SafeAreaView style={styles.container}>
+              <RefreshableList paginationOff page='TSK' pnkpId={this.props.pnkpId} pageActive={this.props.page}/>
+            </SafeAreaView>
+          </NavigationBar>
+         : 
+          <NavigationBar hideSearch renderButton={buttonGroup} loading={this.state.loading}>
+            <SafeAreaView style={styles.container}>
+              <RefreshableList paginationOff page='TSK' pnkpId={this.props.pnkpId} pageActive={this.props.page}/>
+            </SafeAreaView>
+          </NavigationBar>
+      )
+    }
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
-        <SafeAreaView style={styles.container}>
-          <RefreshableList page='TSK'/>
-        </SafeAreaView>
-      </NavigationBar>
+        <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+          <SafeAreaView style={styles.container}>
+            <RefreshableList page='TSK' />
+          </SafeAreaView>
+        </NavigationBar>
     )
   }
 }

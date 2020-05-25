@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { Button } from 'react-native-elements'
+import { Icon } from 'native-base';
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
+import RefreshableList from '../../component/refreshableList';
 
 function Separator() {
   return <View style={styles.separator} />;
@@ -24,27 +26,19 @@ export default class PenangkapanList extends React.Component {
     const buttonGroup = (
       <React.Fragment>
         <Button
-          title="BUAT PENANGKAPAN"
+          title="Buat Penangkapan"
           type="outline"
+          icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='create' />}
           containerStyle={{padding:10}}
           onPress={()=>this.props.navigation.navigate('penangkapan.new')}
-        />
-        <Button
-          title="EDIT PENANGKAPAN"
-          type="outline"
-          containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('penangkapan.edit')}
         />
       </React.Fragment>
     )
     return (
-      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
+      <NavigationBar hideSearch renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>
-          Ini Penangkapan List
-        </Text>
-        <Separator />
-      </SafeAreaView>
+          <RefreshableList page="PNKP" paginationOff />  
+        </SafeAreaView>
       </NavigationBar>
     )
   }

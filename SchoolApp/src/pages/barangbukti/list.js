@@ -10,7 +10,7 @@ function Separator() {
   return <View style={styles.separator} />;
 }
 
-class BarangBuktiList extends React.Component {
+class StatusBarangBuktiList extends React.Component {
   state = {
     loading: false,
   }
@@ -31,14 +31,24 @@ class BarangBuktiList extends React.Component {
           containerStyle={{padding:10}}
           onPress={()=>this.props.navigation.navigate('barangbukti.new')}
         />
-        <Button
-          title="EDIT BARANG BUKTI"
-          type="outline"
-          containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('barangbukti.edit')}
-        />
       </React.Fragment>
     )
+    if(this.props.pnkpId){
+      return (
+        this.props.page === 'PenangkapanDetail' ? 
+          <NavigationBar disableMenu hideSearch renderButton={buttonGroup} loading={this.state.loading}>
+            <SafeAreaView style={styles.container}>
+              <RefreshableList paginationOff page='BB' pnkpId={this.props.pnkpId} pageActive={this.props.page}/>
+            </SafeAreaView>
+          </NavigationBar>
+         : 
+          <NavigationBar hideSearch renderButton={buttonGroup} loading={this.state.loading}>
+            <SafeAreaView style={styles.container}>
+              <RefreshableList paginationOff page='BB' pnkpId={this.props.pnkpId} pageActive={this.props.page}/>
+            </SafeAreaView>
+          </NavigationBar>
+      )
+    }
     return (
       <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
@@ -79,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(BarangBuktiList)
+export default connect(mapStateToProps)(StatusBarangBuktiList)

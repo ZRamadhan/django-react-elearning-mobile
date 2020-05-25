@@ -22,6 +22,20 @@ function receive_statusbb(data) {
   }
 }
 
+export function setSelectedLknId(id){
+  return {
+    type: "SET_SELECTED_LKN_ID",
+    id
+  }
+}
+
+export function setSelectedPnkpId(id){
+  return {
+    type: "SET_SELECTED_PNKP_ID",
+    id
+  }
+}
+
 function receive_statusbb_data(data) {
   return {
     type: "RECEIVE_STATUS_BB_DATA",
@@ -64,65 +78,9 @@ function receive_proses(data) {
   }
 }
 
-function receive_tersangka_table(data) {
-  return {
-    type: "RECEIVE_TERSANGKA_TABLE_DATA",
-    data
-  }
-}
-
-function receive_tersangka_table_by_no_lkn(data) {
-  return {
-    type: "RECEIVE_TERSANGKA_TABLE_DATA_BY_LKN",
-    data
-  }
-}
-
-function receive_tersangka_data(data) {
-  return {
-    type: "RECEIVE_TERSANGKA_DATA",
-    data
-  }
-}
-
-function receive_bb_table(data) {
-  return {
-    type: "RECEIVE_BB_TABLE_DATA",
-    data
-  }
-}
-
-function receive_bb_data(data) {
-  return {
-    type: "RECEIVE_BB_DATA",
-    data
-  }
-}
-
-function receive_bb_data_by_pnkp(data) {
-  return {
-    type: "RECEIVE_BB_DATA_BY_PNKP",
-    data
-  }
-}
-
 function receive_lkn_by_no_lkn(data) {
   return {
     type: "RECEIVE_LKN_BY_NO_LKN_DATA",
-    data
-  }
-}
-
-function receive_penangkapan_by_no_lkn(data) {
-  return {
-    type: "RECEIVE_PENANGKAPAN_BY_NO_LKN_DATA",
-    data
-  }
-}
-
-function receive_penangkapan_by_id(data) {
-  return {
-    type: "RECEIVE_PENANGKAPAN_BY_ID",
     data
   }
 }
@@ -464,7 +422,6 @@ export function getpenangkapan(token, id = null, LKN = null) {
     } else {
       url = `/api/pnkp/`
     }
-
     return request(url, {
       method: 'GET',
       headers: {
@@ -473,14 +430,11 @@ export function getpenangkapan(token, id = null, LKN = null) {
       }
     })
       .then(response => {
+        console.log('response', response.data)
         if(response instanceof Error){
           return
         }
-        if(LKN){
-          dispatch(receive_penangkapan_by_no_lkn(response.data))
-        } else if(id){
-          dispatch(receive_penangkapan_by_id(response.data))
-        }
+        return response.data
       })
       .catch(error => {
         console.log(error)
@@ -535,10 +489,11 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
     else if (page){
       url = `/mobile-api/tersangka/?page=${page}`
     }
-
     else {
       url = `/api/tsk-edit/`
     }
+
+    console.log('pnkp', pnkp_id, token, url)
     return request(url, {
       method: 'GET',
       headers: {
@@ -547,18 +502,11 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
       }
     })
       .then((response) => {
+        console.log('responseku', response)
         if(response instanceof Error){
           return
         }
-        if(id){
-          dispatch(receive_tersangka_data(response.data))
-        }
-        else if (pnkp_id) {
-          dispatch(receive_tersangka_table_by_no_lkn(response.data))
-        }
-        else {
-          dispatch(receive_tersangka_table(response.data))
-        }
+        return response.data
       })
   }
 }
@@ -674,19 +622,9 @@ export function get_bb_list(token, id = null, pnkp_id = null, page = null) {
     })
     .then((response) => {
       if (response instanceof Error){
-        throw Error
-      } else {
-        if(id){
-          dispatch(receive_bb_data(response.data))
-        }
-        else if(pnkp_id){
-          dispatch(receive_bb_data_by_pnkp(response.data))
-        }
-        else {
-          dispatch(receive_bb_table(response.data))
-        }
-      }
-      return response
+        return
+      } 
+      return response.data
     })
     .catch((e) => {
       return 'error'
