@@ -41,8 +41,8 @@ export default class FormGroup extends Component {
         )
       } else if(data.type === 'number'){
         var defaultInput = '';
-        if(this.props.defaultValue) {
-          defaultInput = this.props.defaultValue[data.fieldName]
+        if(this.props.defaultValue[data.fieldName]) {
+          defaultInput = this.props.defaultValue[data.fieldName].toString()
         }
         return (
           <Input defaultValue={defaultInput} onFormChange={this.props.onFormChange} fieldName={data.fieldName} key={data.label} placeholder={data.label} type='number'/>

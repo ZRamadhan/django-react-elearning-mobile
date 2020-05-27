@@ -45,7 +45,7 @@ const DatePicker = (props) => {
       <InputGroup>
         {show && (
           <DateTimePicker
-            value={ date || new Date()}
+            value={ defaultDate || new Date()}
             mode={mode}
             display="default"
             onChange={onChange}

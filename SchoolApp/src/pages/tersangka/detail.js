@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { Button } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
 

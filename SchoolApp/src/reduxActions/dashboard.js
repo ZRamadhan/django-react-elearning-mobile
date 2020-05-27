@@ -22,6 +22,12 @@ function receive_statusbb(data) {
   }
 }
 
+function receive_tersangka_data(data){
+  return {
+    type: "RECEIVE_TERSANGKA_DATA",
+    data
+  }
+}
 export function setSelectedLknId(id){
   return {
     type: "SET_SELECTED_LKN_ID",
@@ -359,7 +365,7 @@ export function post_lkn_by_penyidik(token, data) {
 export function get_lkn_by_no_lkn(token, id) {
   return async dispatch => {
     try {
-      const result = await request(`/api/lkn/${id}`, {
+      const result = await request(`/api/lkn/${id}/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -444,7 +450,7 @@ export function getpenangkapan(token, id = null, LKN = null) {
 
 export function deletepenangkapan(token, id) {
   return dispatch => {
-    return request(`/api/pnkp/${id}`, {
+    return request(`/api/pnkp/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -493,7 +499,6 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
       url = `/api/tsk-edit/`
     }
 
-    console.log('pnkp', pnkp_id, token, url)
     return request(url, {
       method: 'GET',
       headers: {
@@ -502,9 +507,11 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
       }
     })
       .then((response) => {
-        console.log('responseku', response)
         if(response instanceof Error){
           return
+        }
+        if(id){
+          dispatch(receive_tersangka_data(response.data))
         }
         return response.data
       })

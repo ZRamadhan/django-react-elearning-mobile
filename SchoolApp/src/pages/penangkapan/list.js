@@ -30,7 +30,7 @@ export default class PenangkapanList extends React.Component {
           type="outline"
           icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='create' />}
           containerStyle={{padding:10}}
-          onPress={()=>this.props.navigation.navigate('penangkapan.new')}
+          onPress={()=>this.props.navigation.navigate('penangkapan.new', {lknId: this.props.lknId})}
         />
       </React.Fragment>
     )

@@ -10,8 +10,22 @@ import { connect } from 'react-redux';
 import { setSelectedPnkpId } from '../../reduxActions/dashboard';
 import { InputGroup, Icon, Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
+import { deletepenangkapan } from '../../reduxActions/dashboard';
+import { get_token, request } from '../../helper/requestHelper';
 
 class PenangkapanCard extends React.PureComponent {
+
+  async onDelete(id) {
+    var token = await get_token();
+    await this.props.dispatch(deletepenangkapan(token, id))
+    if(!this.props.error){
+      this.props.navigation.navigate('penangkapan.list')
+    } else {
+      console.log(this.props.error)
+      return;
+    }
+  }
+  
   render() {
     const { item } = this.props;
     return (
@@ -119,7 +133,7 @@ class PenangkapanCard extends React.PureComponent {
                     }>
                       <Text style={{color: 'gray', fontWeight: 'bold'}}>Edit</Text>
                     </MenuOption>
-                    <MenuOption onSelect={() => alert(`Delete`)} >
+                    <MenuOption onSelect={() => this.onDelete(item.id)} >
                       <Text style={{color: 'red', fontWeight: 'bold'}}>Delete</Text>
                     </MenuOption>
                   </MenuOptions>

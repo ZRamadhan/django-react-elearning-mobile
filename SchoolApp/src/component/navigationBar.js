@@ -93,7 +93,6 @@ class NavigationBar extends Component {
                     this.setState({showFilter: false})
                     this._toggleSubview()
                   }}
-                  containerStyle={styles.button}
                   type="outline"
                 />
                 <Button
@@ -102,13 +101,12 @@ class NavigationBar extends Component {
                     <Icon style={{fontSize:14, color:'#517fa4', padding:5}} name='ios-cloud'/>
                   }
                   raised
-                  containerStyle={styles.button}
-                  type="clear"
+                  type="outline"
                 />
                 <Button
                   title={this.props.home ? "Logout" : "Back"}
-                  buttonStyle={{padding: 8, color: 'red'}}
-                  type="clear"
+                  raised
+                  type="outline"
                   onPress={this.props.home 
                     ? () => this.props.navigation.navigate('login') 
                     : () => this.props.navigation.pop()}
@@ -211,9 +209,9 @@ var styles = StyleSheet.create({
     flex: 1,
     marginTop: 35
   },
-  button: {
-    // padding: 8,
-  },
+  // button: {
+  //   // padding: 8,
+  // },
   buttonText: {
     fontSize: 17,
     color: "#007AFF"
