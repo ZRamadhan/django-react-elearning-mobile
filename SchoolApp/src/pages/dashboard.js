@@ -63,8 +63,11 @@ class Dashboard extends React.Component {
             <View style={{padding:10}}>
               <Text style={{fontSize:30, fontWeight: 'bold', color: '#543C7E'}}>Dashboard</Text>
             </View>
-            <TouchableOpacity style={{alignItems:'center', backgroundColor:'#A5DDFC', height:20, width:100}}>
-              <Text>Buat Berkas</Text>
+            <TouchableOpacity 
+              style={{justifyContent:'center', alignItems:'center', backgroundColor:'#A5DDFC', height:40, borderRadius:20, width:100}}
+              onPress={() => this.props.navigation.navigate('lkn.new')}
+            >
+              <Text style={{fontWeight:'bold', color:'gray'}}>Buat Berkas</Text>
             </TouchableOpacity>
             <View style={{padding:10, flexDirection:'row', justifyContent: 'space-between'}}>
               <TouchableOpacity onPress={() => {
