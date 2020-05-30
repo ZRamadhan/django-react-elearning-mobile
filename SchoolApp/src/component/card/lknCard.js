@@ -33,16 +33,18 @@ class LKNCard extends React.PureComponent {
         <View 
         style={{
           borderWidth: 1,
-          borderRadius: 2,
+          borderRadius: 10,
           padding:10,
           borderColor: '#ddd',
           borderBottomWidth: 0,
           shadowColor: '#000',
-          shadowOffset: { width: 2, height: 2 },
+          shadowOffset: { width: 0, height: 5 },
           shadowOpacity: 0.5,
-          shadowRadius: 3,
-          elevation: 2,
+          shadowRadius: 10,
+          elevation: 8,
           margin: 10,
+          backgroundColor: '#F7F7F7',
+          opacity: 0.85
         }}>
           <TouchableOpacity onPress={() => {
             this.props.navigation.navigate('lkn.details', {
