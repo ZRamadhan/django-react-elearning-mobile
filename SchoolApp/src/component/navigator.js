@@ -5,8 +5,8 @@ import LknList from '../pages/lkn/list';
 import LknEdit from '../pages/lkn/edit';
 import LknView from '../pages/lkn/detail';
 import LknNew from '../pages/lkn/new';
-import SearchBar from './searchBar';
 import PenangkapanList from '../pages/penangkapan/list';
+import Dashboard from '../pages/dashboard';
 import PenangkapanEdit from '../pages/penangkapan/edit';
 import PenangkapanNew from '../pages/penangkapan/new';
 import ProsesTersangkaView from '../pages/tersangka/prosesTersangka/detail';
@@ -54,7 +54,7 @@ const navigationOptions = ({ navigation }) => ({
 });
 
 const LKNNavigator = createStackNavigator({
-  'searchBar': { screen: mapNavigationStateParamsToProps(SearchBar)},
+  'dashboard': { screen: mapNavigationStateParamsToProps(Dashboard)},
   'lkn.list': { screen: mapNavigationStateParamsToProps(LknList) },
   'lkn.details': { screen: mapNavigationStateParamsToProps(LknView) },
   'lkn.edit': { screen: mapNavigationStateParamsToProps(LknEdit) },
