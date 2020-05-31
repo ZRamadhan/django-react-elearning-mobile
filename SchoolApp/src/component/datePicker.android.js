@@ -53,7 +53,7 @@ const DatePicker = (props) => {
         )}
         <Icon name='calendar' style={{fontSize:16}}/>
         <TouchableOpacity onPress={showDatepicker}>
-          <Text style={{padding:5, fontSize:15, color:'gray'}}>{defaultDate ? moment(defaultDate).format("DD/MM/YYYY") : "Atur Tanggal"}</Text>
+          <Text style={{padding:5, fontSize:15, color:'gray'}}>{defaultDate ? moment(defaultDate).format("DD-MM-YYYY") : "Atur Tanggal"}</Text>
         </TouchableOpacity>
       </InputGroup>
     </View>
@@ -62,10 +62,7 @@ const DatePicker = (props) => {
 
 var styles = StyleSheet.create({
   container: {
-    marginTop: 15,
-    marginRight: 15,
-    marginLeft: 15,
-    height: 60,
+    padding:15,
   },
 });
 
