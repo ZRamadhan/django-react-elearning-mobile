@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { InputGroup, Icon, Input, ListItem, List, Body, Text } from 'native-base';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Button } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 
 class SearchBar extends Component {
@@ -10,6 +11,16 @@ class SearchBar extends Component {
     render() {
         return (
             <View>
+                <Button
+                  icon={{
+                    name: "ac-unit",
+                    size: 15,
+                    color: "white"
+                  }}
+                  containerStyle={{marginTop:40}}
+                  title="Close"
+                  onPress={this.props.onClose}
+                />
                 <InputGroup style={styles.container}>
                     <Icon name='ios-search' />
                     <Input placeholder='Search' 

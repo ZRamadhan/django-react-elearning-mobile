@@ -77,7 +77,7 @@ class LKNLIST extends React.Component {
     )
 
     return (
-      <NavigationBar isHome renderButton={buttonGroup} loading={this.state.loading} home>
+      <NavigationBar renderButton={buttonGroup} loading={this.state.loading}>
         <SafeAreaView style={styles.container}>
           <RefreshableList page='LKN' onDelete={this.onDelete}/>
         </SafeAreaView>

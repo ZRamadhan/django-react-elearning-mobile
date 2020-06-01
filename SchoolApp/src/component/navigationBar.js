@@ -14,7 +14,7 @@ const {
 } = ReactNative;
 
 const data = []
-for(let i=0; i<26; i++){
+for(let i=0; i<30; i++){
   data.push('90%')
 }
 
@@ -77,6 +77,7 @@ class NavigationBar extends Component {
               height: 60,
               flexDirection: "row",
               alignItems: 'center',
+              marginTop: 10,
               marginBottom: 15,
               justifyContent: 'space-between',
               paddingLeft: 10,
@@ -112,15 +113,6 @@ class NavigationBar extends Component {
                     : () => this.props.navigation.pop()}
                 />
             </View>
-          )}
-          {!this.props.hideSearch && (
-            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('searchBar')}>
-              <InputGroup style={{margin:10, marginBottom: 20}}>
-                  <Icon name='ios-search' />
-                  <Text style={{padding:10, width:'80%'}}>Search</Text>
-                  <TouchableOpacity onPress={this._toggleFilter}><Icon name='funnel' /></TouchableOpacity>
-              </InputGroup>
-            </TouchableWithoutFeedback>
           )}
           <Animated.View
             style={[styles.subView,
@@ -172,7 +164,7 @@ class NavigationBar extends Component {
                     type="outline"
                     icon={<Icon style={{fontSize:20, color:'#517fa4', padding:5}} name='ios-home' />}
                     containerStyle={styles.buttonFilter}
-                    onPress={()=>this.props.navigation.replace('lkn.list')}
+                    onPress={()=>this.props.navigation.replace('dashboard')}
                   />
                 )}
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -184,8 +176,8 @@ class NavigationBar extends Component {
           <ContentLoader
             active
             loading={this.props.loading}
-            containerStyles={{marginLeft: 20}}
-            pRows={25}
+            containerStyles={{marginTop:30,marginLeft: 20}}
+            pRows={30}
             pWidth={data}
            >
             {!this.state.hideContent && (
@@ -197,7 +189,6 @@ class NavigationBar extends Component {
               </TouchableWithoutFeedback>
             )}
            </ContentLoader>
-           
       </View>
       </ImageBackground>
     );
@@ -207,7 +198,8 @@ class NavigationBar extends Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 35
+    padding: 15,
+    marginTop: 40
   },
   // button: {
   //   // padding: 8,

@@ -3,6 +3,7 @@ import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { Button } from 'react-native-elements'
 import Constants from 'expo-constants';
 import NavigationBar from '../../component/navigationBar';
+import { Icon } from 'react-native-elements'
 
 function Separator() {
   return <View style={styles.separator} />;

@@ -32,7 +32,7 @@ class Login extends React.Component {
             containerStyle={{padding:10}}
             onPress={() => {
               this.onSubmit();
-              this.props.navigation.navigate('lkn.list')
+              this.props.navigation.navigate('dashboard')
             }}
           />
         <Separator />

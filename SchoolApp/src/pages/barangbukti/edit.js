@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 import Constants from 'expo-constants';
 import FormGroup from '../../component/form/formGroup';
 import NavigationBar from '../../component/navigationBar';
