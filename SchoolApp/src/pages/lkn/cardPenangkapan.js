@@ -59,23 +59,22 @@ class cardPenangkapan extends Component {
                 </View>
               </View>
 
-              {data.penangkapan_tersangka.map((tersangka, i) => (
-                <View key={i} style={{ flexDirection: "row" }}>
-                  <View style={styles.fotoTersangka}>
-                    <Image
-                      style={{ width: 30, height: 30, borderRadius: 15 }}
-                      source={
-                        tersangka.foto == null ||
-                        tersangka.foto == "" ||
-                        tersangka.foto == undefined
-                          ? require("../../assets/no_picture.png")
-                          : { uri: `${tersangka.foto}` }
-                      }
-                    />
+              <View style={{flexDirection: 'row', paddingTop: 5}}>
+                {data.penangkapan_tersangka.map((tersangka, i) => (
+                    <View style={styles.fotoTersangka}>
+                      <Image
+                        style={{ width: 30, height: 30, borderRadius: 15 }}
+                        source={
+                          tersangka.foto == null ||
+                          tersangka.foto == "" ||
+                          tersangka.foto == undefined
+                            ? require("../../assets/no_picture.png")
+                            : { uri: `${tersangka.foto}` }
+                        }
+                      />
                   </View>
-                </View>
-              ))}
-
+                ))}
+              </View>
             </View>
           </TouchableOpacity>
         ))}
