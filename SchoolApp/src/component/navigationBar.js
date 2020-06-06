@@ -110,7 +110,7 @@ class NavigationBar extends Component {
                   type="outline"
                   onPress={this.props.home 
                     ? () => this.props.navigation.navigate('login') 
-                    : () => this.props.navigation.pop()}
+                    : () => this.props.navigation.navigate('dashboard')}
                 />
             </View>
           )}

@@ -44,9 +44,7 @@ class RefreshableList extends Component {
     if(this.props.page === 'LKN'){
       result = await this.props.dispatch(get_lkn_mobile(this.page, [], token))
     } else if(this.props.page === 'TSK'){
-      console.log('pnkpkuu', pnkpId)
       if(pnkpId){
-        console.log('why')
         result = await this.props.dispatch(get_tersangka_list(token, null, pnkpId))  
       } else {
         result = await this.props.dispatch(get_tersangka_mobile(this.page, [], token))
@@ -63,7 +61,7 @@ class RefreshableList extends Component {
     if(result === null){
       this.setState({ loading: false, error: true})
     } else {
-      this.setState({ loading: false, data: result })
+      this.setState({ loading: false, data: this.state.data.concat(result) })
     }
     this.alreadyMount = true;
   }
@@ -109,7 +107,6 @@ class RefreshableList extends Component {
     if(this.props.page === 'LKN'){
       result = await this.props.dispatch(get_lkn_mobile(this.page, [], token))
     } else if(this.props.page === 'TSK'){
-      console.log('pnkpkuu', pnkpId)
       if(pnkpId){
         result = await this.props.dispatch(get_tersangka_list(get_token(), null, pnkpId))  
       } else {
@@ -124,6 +121,7 @@ class RefreshableList extends Component {
     } else if(this.props.page === 'PNKP'){
       result = await this.props.dispatch(getpenangkapan(token, null, this.props.noLkn))
     }
+    console.log('result', result.length)
     this.setState({ isRefreshing: false, data: result })
   }
 
@@ -134,7 +132,6 @@ class RefreshableList extends Component {
           height: '100%'
         }}><ActivityIndicator style={{ color: '#000' }} /></View>;
       }
-
       let renderItem;
       if(this.props.page === 'LKN'){
         renderItem = renderLKN;
@@ -145,8 +142,13 @@ class RefreshableList extends Component {
       } else if(this.props.page === 'PNKP'){
         renderItem = renderPenangkapan
       }
+      const keyword = this.props.filter.keyword === '' ? 'tidak ada kata kunci' : this.props.filter.keyword;
       return (
         <View style={{ width: '100%', height: '100%' }}>
+          <Text style={{fontSize:20, fontWeight:'bold'}}>{`List Berkas ${this.props.page}`}</Text>
+          <Text style={{fontSize:14, fontWeight:'bold', padding: 3, color: 'gold'}}>{this.props.filter.type === 'TODAY' ? 
+            "Tanggal : Hari Ini" : `Rentang Tanggal : ${this.props.filter.startDate} s/d ${this.props.filter.endDate}`}</Text>
+          <Text style={{fontSize:14, fontWeight:'bold', padding: 3, color: 'gold'}}>{`Kata Kunci : ${keyword}`}</Text>
           <FlatList
             data={this.state.data}
             extraData={this.state}
@@ -169,7 +171,7 @@ class RefreshableList extends Component {
             <Button
               title="Load more..."
               type="clear"
-              icon={<Icon style={{fontSize:15, color:'#517fa4', padding:8}} name='undo' />}
+              icon={<Icon style={{marginBottom:10, fontSize:15, color:'#517fa4', padding:8}} name='undo' />}
               containerStyle={{padding:10}}
               onPress={()=>this.handleLoadMore()}
           />)}
@@ -181,7 +183,7 @@ class RefreshableList extends Component {
 function mapStateToProps(state) {
   const { dashboard } = state
   return {
-    error: dashboard.error,
+    filter: dashboard.filter,
     noLkn: dashboard.selectedLknId,
     lknTableData: dashboard.lknTableData,
   }

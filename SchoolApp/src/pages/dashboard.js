@@ -13,7 +13,7 @@ import Constants from 'expo-constants';
 import { get_token } from '../helper/requestHelper';
 import NavigationBar from '../component/navigationBar';
 import Modal from '../component/modal';
-import { login } from '../reduxActions/dashboard';
+import { setFilter } from '../reduxActions/dashboard';
 import moment from 'moment';
 
 function Separator() {
@@ -41,7 +41,6 @@ class Dashboard extends React.Component {
  
   onFormChange = (fieldName, e) => {
     const formObj = {...this.state.form};
-    console.log('event', e, 'fieldName', fieldName)
     formObj[fieldName] = e
     this.setState({
       form: formObj,
@@ -51,12 +50,9 @@ class Dashboard extends React.Component {
   async componentDidMount(){
     this.setState({loading:true})
     //do api call here
+    this.props.dispatch(setFilter('ALL', this.state.form.startDate, this.state.form.endDate))
     const token = await get_token()
     setTimeout(() => this.setState({loading:false}), 2000);
-  }
-
-  onSubmit = async() => {
-    await this.props.dispatch(login())
   }
 
   render(){
@@ -100,6 +96,7 @@ class Dashboard extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {
                 this.setState({loadingContent:true, page: FILTER.Today})
+                this.props.dispatch(setFilter('TODAY', null, null))
                 setTimeout(() => this.setState({loadingContent:false}), 1000);
               }}>
                 <Text style={this.state.page === FILTER.Today ? styles.selectedMenu : styles.menu}>Hari Ini</Text>
@@ -117,13 +114,19 @@ class Dashboard extends React.Component {
                   <Text style={{padding:10, width:'80%'}}>Search</Text>
               </InputGroup>
             </TouchableWithoutFeedback>
-            <Modal title='Show Date Filter'>
-              <React.Fragment>
-                <DatePicker fieldName='startDate' onFormChange={this.onFormChange} placeholder='Dari Tanggal'/>
-                <DatePicker fieldName='endDate' onFormChange={this.onFormChange} placeholder='Sampai Tanggal'/>
-                <RoundButton title='Terapkan Filter' />
-              </React.Fragment>
-            </Modal>
+            {this.state.page === FILTER.All && (
+              <Modal title='Show Date Filter'>
+                <React.Fragment>
+                  <DatePicker fieldName='startDate' onFormChange={this.onFormChange} placeholder='Dari Tanggal'/>
+                  <DatePicker fieldName='endDate' onFormChange={this.onFormChange} placeholder='Sampai Tanggal'/>
+                  <RoundButton title='Terapkan Filter' onPress={() => {
+                    this.setState({loadingContent: true})
+                    this.props.dispatch(setFilter('ALL', this.state.form.startDate, this.state.form.endDate))
+                    setTimeout(() => this.setState({loadingContent:false}), 1000);
+                  }}/>
+                </React.Fragment>
+              </Modal>
+            )}
             <Text style={{fontSize:12, fontWeight:'bold', color:'gray', padding:10}}>{filteredString}</Text>
             <ScrollView>
             <ContentLoader

@@ -6,6 +6,12 @@ const initialState = {
   userData: [],
   prosesTersangka: [],
   prosesTersangkaData: [],
+  filter: {
+    type: 'TODAY',
+    startDate: null,
+    endDate: null,
+    keyword: '',
+  },
   error: false,
   lknData: [],
   selectedPnkpId: null,
@@ -27,6 +33,26 @@ const initialState = {
 };
 const dashboard = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_FILTER': {
+      return {
+        ...state,
+        filter: {
+          keyword: '',
+          type: action.filter.type,
+          startDate: action.filter.startDate,
+          endDate: action.filter.endDate
+        }
+      }
+    };
+    case 'SET_KEYWORD': {
+      return {
+        ...state,
+        filter: {
+          ...state.filter,
+          keyword: action.keyword,
+        }
+      }
+    };
     case 'RECEIVE_LKN_TABLE_DATA':
       return {
         ...state,

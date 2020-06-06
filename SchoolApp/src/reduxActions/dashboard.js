@@ -131,6 +131,23 @@ export function reset_error() {
   }
 }
 
+export function setFilter(type, startDate, endDate) {
+  return {
+    type: 'SET_FILTER',
+    filter: {
+      type,
+      startDate,
+      endDate
+    }
+  }
+}
+
+export function setKeyword(keyword){
+  return {
+    type: 'SET_KEYWORD',
+    keyword
+  }
+}
 export function createLKN(token, data) {
   return async dispatch => {
     const result = await request('/api/lkn/', {
