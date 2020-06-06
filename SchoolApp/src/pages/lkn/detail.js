@@ -8,7 +8,8 @@ import Constants from "expo-constants";
 import NavigationBar from "../../component/navigationBar";
 import { get_lkn_detail } from "../../reduxActions/dashboard";
 import { get_token } from "../../helper/requestHelper";
-import CardPenangkapan from "./cardPenangkapan";
+import CardPenangkapan from "../penangkapan/cardPenangkapan";
+// import PenangkapanDetail from '../penangkapan/detail'
 
 function Separator() {
   return <View style={styles.separator} />;
@@ -66,6 +67,7 @@ class LKNDetail extends React.Component {
 
           <Content>
             <CardPenangkapan />
+            {/* <PenangkapanDetail /> */}
           </Content>
         </SafeAreaView>
       </NavigationBar>
